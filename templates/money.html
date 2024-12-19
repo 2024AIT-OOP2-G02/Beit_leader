@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金額参照</title>
+    <!-- スタイルシートのリンク -->
+    <link rel="stylesheet" href="base-style.css">
+    <!-- JavaScriptファイルのリンク -->
+    <script src="       " defer></script>
+</head>
+<body>
+    <header>
+        <h1>金額参照</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">ホーム</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>月毎の収入</h2>
+        <canvas id="month-money" width="400" height="400"></canvas>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 </p>
+    </footer>
+</body>
+</html>
