@@ -9,7 +9,7 @@ class Wage(Model):
     work_time = FloatField()
     start_date = DateTimeField()
     finish_date = DateTimeField()
-    holyday = BooleanField()
+    is_holyday = BooleanField()
 
     
 
