@@ -24,4 +24,15 @@ def calculate_wages():
         results[entry['location']] = round(entry['total_salary'], 2)
     
     return results
-    
+
+def calculate_salaries(data):
+
+
+    salaries = []
+    for workplace, hours, hourly_wage in data:
+        salary = hours * hourly_wage
+        salaries.append({
+            'workplace': workplace,
+            'salary': round(salary, 2)  # 小数点以下2桁で丸める
+        })
+    return salaries
