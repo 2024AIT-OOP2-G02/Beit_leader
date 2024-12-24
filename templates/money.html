@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>給料計算結果</title>
+    <link rel="stylesheet" href="base-style.css">
+</head>
+<body>
+    <header>
+        <h1>給料計算結果</h1>
+    </header>
+
+    <main>
+        <h2>月毎の収入</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>バイト先</th>
+                    <th>合計給与</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for location, salary in wages.items() %}
+                <tr>
+                    <td>{{ location }}</td>
+                    <td>{{ salary }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 シフト管理アプリ</p>
+    </footer>
+</body>
+</html>
