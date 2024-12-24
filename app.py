@@ -3,6 +3,11 @@ from routes.money import calculate_wages
 
 app = Flask(__name__)
 
+# デフォルトページ（index.html）を表示
+@app.route('/', methods=['GET'])
+def home():
+    return render_template('index.html')
+
 ##↓↓賃金計算↓↓
 @app.route('/wages', methods=['GET'])
 def display_wages():
