@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合計給与</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='total_income_graph.js') }}" defer></script>
+</head>
+<body>
+    <header>
+        <h1>合計給与</h1>
+    </header>
+
+    <main>
+        <!-- 合計給与を渡すためのdata属性を設定 -->
+        <div id="graph-container" data-total-income="{{ total_income }}"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 シフト管理アプリ</p>
+    </footer>
+</body>
+</html>
