@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    	<title>シフト管理アプリ</title>
+      <title>シフト管理アプリ</title>
 		<link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
 	</head>
 	<body>
@@ -12,6 +12,7 @@
 		</header>
 		<main>
 			<li><a href="{{ url_for('display_wages') }}">給与参照</a></li>
+			<li><a href="{{ url_for('display_103_graph')}}">合計給与参照</a></li>
 		</main>
 		<footer>
 			<p>© 2024 シフト管理アプリ</p>
