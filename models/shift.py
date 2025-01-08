@@ -3,7 +3,7 @@ from .db import db
 from .user import User
 from .wage import Wage
 
-class Wage(Model):
+class Shift(Model):
     user = ForeignKeyField(User, backref='shifts')
     wage = ForeignKeyField(Wage, backref='shifts')
     work_time = FloatField()
