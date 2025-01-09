@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     calendar.render();
+    
 
     // Save shift
     saveShiftButton.addEventListener('click', async function () {

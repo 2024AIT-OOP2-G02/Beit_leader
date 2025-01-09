@@ -30,5 +30,6 @@ def add_shift():
         return jsonify({"message": "シフトが正常に追加されました。"}), 200
     return jsonify({"message": "無効なデータです。"}), 400
 
+
 if __name__ == '__main__':
     app.run(debug=True)
