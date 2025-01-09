@@ -73,12 +73,3 @@ def get_monthly_earnings():
         {"11月": 65000},
         {"12月": 80000}
     ]
-
-# 計算結果を出力するテスト
-@app.route('/')
-def display_wages():
-    wages = calculate_wages()
-    return render_template('money.html', wages=wages)
-
-if __name__ == "__main__":
-    app.run(debug=True)
