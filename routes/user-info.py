@@ -17,7 +17,8 @@ def add():
             Wage.create(weekday_wage=weekday_wage)
             return redirect(url_for('index.html'))
         users = User.select()
-        return render_template('user_add.html', users=users)
+        wages = Wage.select()
+        return render_template('user_add.html', users=users,wages = wages)
 
 
 @user_bp.route('/edit/<int:User_id>', methods=['GET', 'POST'])
