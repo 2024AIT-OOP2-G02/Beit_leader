@@ -1,6 +1,6 @@
 from flask import Flask, render_template, Blueprint
 from models import initialize_database
-from routes.money import calculate_wages
+from routes.money import calculate_monthly_earnings, calculate_wages
 from routes.income_analyzer import calc_total_income
 
 app = Flask(__name__)
@@ -27,7 +27,8 @@ def display_wages():
 @app.route('/103_graph', methods=['GET'])
 def display_103_graph():
     total_income = calc_total_income(calculate_wages())
-    return render_template('total_income.html', total_income = total_income)
+    monthly_earnings=calculate_monthly_earnings()
+    return render_template('total_income.html', total_income=total_income, monthly_earnings=monthly_earnings)
 
 if __name__ == '__main__':
   app.run(debug=True)
