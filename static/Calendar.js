@@ -58,20 +58,27 @@ function buttonClick() {
     const start = `${date_value}T${shift_in_value}:00`;
     const end = `${date_value}T${shift_out_value}:00`;
 
-    // カレンダーに直接イベントを追加
-    calendar.addEvent({
-        // title: "シフト",
-        uuid: self.crypto.randomUUID(),
+    const newEvent = {
+        title: "シフト",
         start: start,
         end: end,
         extendedProps: {
             status: "pending",
         },
-    });
+    };
+
+    // カレンダーに直接イベントを追加
+    calendar.addEvent(newEvent);
+
+    // shiftArrayにも追加
+    shiftArray.push(newEvent);
+
     modal.close();
 
     console.log("イベントが追加されました:", { start, end });
+    console.log("現在のshiftArray:", shiftArray);
 }
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const calendarEl = document.getElementById("calendar");
@@ -124,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     calendar.render();
-    
+
 
     modal.querySelector("button").addEventListener("click", function () {
         modal.close();
