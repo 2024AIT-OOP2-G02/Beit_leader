@@ -1,26 +1,56 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>バイトシフト管理</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.4/main.min.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="
+https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js
+"></script>
+	<script src="test.js"></script>
+	<link href="test.css" rel="stylesheet" />
+	<title>Beit-Leader-test</title>
 </head>
+
 <body>
-    <h1>バイトシフト管理アプリ</h1>
-    <div id="calendar"></div>
-
-    <!-- Shift Input Modal -->
-    <div id="shiftModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; padding:20px; border:1px solid #ccc; box-shadow:0 2px 10px rgba(0,0,0,0.2);">
-        <h3>シフトの登録</h3>
-        <label for="shiftDetails">シフト詳細:</label>
-        <input type="text" id="shiftDetails">
-        <button id="saveShift">保存</button>
-        <button id="closeModal">閉じる</button>
-    </div>
-    
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.4/main.min.js"></script>
-    <script src="calendar.js"></script>
+	<dialog id="modal">
+		<button autofocus>閉じる</button>
+		<div id="modal-text">
+			<p>シフトの日時を入力</p>
+			<div id="modal-box">
+				<form class="modal-form">
+					<label for="shift">日付</label>
+					<input type="date" id="shift-date" name="shift-date">
+					<label for="shift">シフト開始</label>
+					<input type="time" id="shift-in" name="shift-in">
+					<label for="shift">シフト終了</label>
+					<input type="time" id="shift-out" name="shift-out">
+					<input type="button" value="登録" id="shift-button" onclick="buttonClick()">
+				</form>
+				<p id="warn-text">日付を入力してね</p>
+			</div>
+		</div>
+	</dialog>
+	<div id="contents">
+		<h1 id="header">シフト登録</h1>
+		<div id="main">
+			<div id="side">
+				<!-- <form class="shift-form">
+					<label for="shift">日付</label>
+					<input type="date" id="shift-date" name="shift-date">
+					<label for="shift">シフト開始</label>
+					<input type="time" id="shift-in" name="shift-in">
+					<label for="shift">シフト終了</label>
+					<input type="time" id="shift-out" name="shift-out">
+					<input type="button" value="登録" id="shift-button" onclick="buttonClick()">
+				</form>
+				<p id="warn-text">日付を入力してね</p> -->
+			</div>
+			<div id="main-contents">
+				<div id="calendar"></div>
+			</div>
+		</div>
+	</div>
 </body>
+
 </html>
