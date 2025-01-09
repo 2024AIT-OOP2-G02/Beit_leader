@@ -1,6 +1,6 @@
-from flask import Flask, render_template, Blueprint
-from models import initialize_database
-from routes.money import get_monthly_earnings, calculate_wages
+from flask import Flask, render_template
+from models import initialize_database, User
+from routes.money import calculate_wages, get_monthly_earnings
 from routes.income_analyzer import calc_total_income
 
 app = Flask(__name__)
@@ -12,7 +12,10 @@ initialize_database()
 # デフォルトページ（index.html）を表示
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('index.html')
+    if User.name==None:
+        return render_template('user_add.html')
+    else:
+        return render_template('index.html')
 
 ##↓↓賃金計算↓↓
 @app.route('/wages', methods=['GET'])

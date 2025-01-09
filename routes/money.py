@@ -1,5 +1,6 @@
 # money.py
 from peewee import fn
+from flask import Flask, render_template
 
 # ダミーデータ1
 #ユーザー登録から読み取る
@@ -21,6 +22,8 @@ def get_dummy_tathunami():
             {'location': 'ラーメンなげやり', 'work_time': 6.0, 'is_holyday': True},
             {'location': 'ラーメン丸和', 'work_time': 3.0, 'is_holyday': False,},
     ]
+
+app = Flask(__name__)
 
 def calculate_wages():
     data1 = get_dummy_data()
@@ -72,7 +75,10 @@ def get_monthly_earnings():
     ]
 
 # 計算結果を出力するテスト
+@app.route('/')
+def display_wages():
+    wages = calculate_wages()
+    return render_template('money.html', wages=wages)
+
 if __name__ == "__main__":
-    result = calculate_wages()
-    for location, salary in result.items():
-        print(f"{location}: {salary}円")
+    app.run(debug=True)

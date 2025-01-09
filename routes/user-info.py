@@ -1,21 +1,17 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from models import User
+from models import User, Wage
 
 # Blueprintの作成
-user_bp = Blueprint('user', __name__, url_prefix='/user')
+user_bp = Blueprint('add', __name__, url_prefix='/add')
 
 
 @user_bp.route('/')
-def list():
-    users = User.select()
-    return render_template('user.html', title='貸出リスト', items=users)
-
-
-@user_bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         user_id = request.form['user_id']
+        company_id = request.form['company_id']
         User.create(user=user_id)
+        Wage.create(location=company_id)
         return redirect(url_for('user.list'))
     users = User.select()
     return render_template('user_add.html', users=users)
