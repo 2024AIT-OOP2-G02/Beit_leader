@@ -53,5 +53,28 @@ document.addEventListener("DOMContentLoaded", () => {
 							},
 					},
 			},
+		plugins: [
+			{
+				id: "centerText",
+				afterDatasetsDraw(chart) {
+					const { ctx } = chart;
+					const datasetMeta = chart.getDatasetMeta(0);
+					if (datasetMeta && datasetMeta.data[0]) {
+						const bar = datasetMeta.data[0];
+						const centerX = bar.x - bar.width / 2; // 棒の中央のx座標
+						const centerY = bar.y; // 棒の中央のy座標
+
+						// テキストを描画
+						ctx.save();
+						ctx.font = "bold 16px sans-serif";
+						ctx.fillStyle = "#000"; // テキストの色
+						ctx.textAlign = "center";
+						ctx.textBaseline = "middle";
+						ctx.fillText(`${(totalIncome/maxAmount*100).toLocaleString()}%`, centerX, centerY);
+						ctx.restore();
+					}
+				},
+			},
+		],
 	});
 });
