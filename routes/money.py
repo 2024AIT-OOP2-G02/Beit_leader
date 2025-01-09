@@ -56,11 +56,3 @@ def calculate_wages():
 
     # 小数点以下2桁で丸める
     return {location: round(salary, 2) for location, salary in wages.items()}
-
-@app.route('/')
-def display_wages():
-    wages = calculate_wages()
-    return render_template('money.html', wages=wages)
-
-if __name__ == "__main__":
-    app.run(debug=True)
