@@ -30,5 +30,5 @@ def display_103_graph():
     return render_template('total_income.html', total_income = total_income)
 
 if __name__ == '__main__':
-  app.run(debug=True)
+    app.run(debug=True)
 
