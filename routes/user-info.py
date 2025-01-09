@@ -9,7 +9,9 @@ user_bp = Blueprint('add', __name__, url_prefix='/add')
 def add():
     if request.method == 'POST':
         user_id = request.form['user_id']
+        company_id = request.form['company_id']
         User.create(user=user_id)
+        User.create(company=company_id)
         return redirect(url_for('user.list'))
     users = User.select()
     return render_template('user_add.html', users=users)
