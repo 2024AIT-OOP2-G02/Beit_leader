@@ -7,14 +7,18 @@ user_bp = Blueprint('add', __name__, url_prefix='/add')
 
 @user_bp.route('/')
 def add():
-    if request.method == 'POST':
-        user_id = request.form['user_id']
-        company_id = request.form['company_id']
-        User.create(user=user_id)
-        Wage.create(location=company_id)
-        return redirect(url_for('user.list'))
-    users = User.select()
-    return render_template('user_add.html', users=users)
+        if request.method == 'POST':
+            user_id = request.form['user_id']
+            company_id = request.form['company_id']
+            weekday_wage = request.form['weekday_wage']
+            holiday_wage = request.form['holiday_wage']
+            User.create(user=user_id)
+            Wage.create(location=company_id)
+            Wage.create(weekday_wage=weekday_wage)
+            return redirect(url_for('index.html'))
+        users = User.select()
+        wages = Wage.select()
+        return render_template('user_add.html', users=users,wages = wages)
 
 
 @user_bp.route('/edit/<int:User_id>', methods=['GET', 'POST'])
