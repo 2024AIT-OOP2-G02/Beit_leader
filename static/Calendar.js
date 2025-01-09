@@ -124,6 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     calendar.render();
+    
 
     modal.querySelector("button").addEventListener("click", function () {
         modal.close();

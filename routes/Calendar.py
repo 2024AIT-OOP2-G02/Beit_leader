@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 app = Flask(__name__, static_folder='static')
 
+
 # サンプルシフトデータ
 shifts = {
     "2024-12-25": ["09:00-13:00: 田中", "14:00-18:00: 鈴木"],
