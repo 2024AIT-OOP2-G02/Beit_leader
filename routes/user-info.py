@@ -2,16 +2,10 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from models import User, Product
 
 # Blueprintの作成
-user_bp = Blueprint('user', __name__, url_prefix='/user')
+user_bp = Blueprint('add', __name__, url_prefix='/add')
 
 
 @user_bp.route('/')
-def list():
-    users = User.select()
-    return render_template('user.html', title='貸出リスト', items=users)
-
-
-@user_bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         user_id = request.form['user_id']
