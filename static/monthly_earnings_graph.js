@@ -1,7 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
     // HTMLから月ごとの収入データを取得
     const graphContainer = document.getElementById("monthly_earnings_graph_container");
-    const monthlyEarnings = JSON.parse(graphContainer.dataset.monthlyEarnings);
+    const monthlyEarningsArray = JSON.parse(graphContainer.dataset.monthlyEarnings);
+
+    // 月ごとの収入をオブジェクトに変換
+    const monthlyEarnings = {};
+    monthlyEarningsArray.forEach(entry => {
+        const month = Object.keys(entry)[0]; // 月の名前を取得
+        const earnings = entry[month]; // 収入を取得
+        monthlyEarnings[month] = earnings; // オブジェクトに追加
+    });
 
     // グラフを表示するためのcanvas要素を作成
     const canvas = document.createElement("canvas");
