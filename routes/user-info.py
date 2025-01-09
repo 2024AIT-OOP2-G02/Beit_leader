@@ -15,6 +15,7 @@ def add():
             User.create(user=user_id)
             Wage.create(location=company_id)
             Wage.create(weekday_wage=weekday_wage)
+            Wage.create(holiday_wage=holiday_wage)
             return redirect(url_for('index.html'))
         users = User.select()
         wages = Wage.select()
