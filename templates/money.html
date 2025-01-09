@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>給料計算結果</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>給料計算結果</h1>
+    </header>
+
+    <main id="money-main">
+        <h2>バイト先の収入</h2>
+        <table class="money-table">
+            <thead>
+                <tr>
+                    <th>バイト先</th>
+                    <th>合計給与</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for location, salary in wages.items() %}
+                <tr>
+                    <td>{{ location }}</td>
+                    <td>{{ salary }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+        <h2>収入の棒グラフ</h2>
+        <div class="graph-container">
+            <canvas id="salary-graph"></canvas>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 シフト管理アプリ</p>
+    </footer>
+</body>
+
+<!-- Pythonで渡されたデータをJavaScript変数として定義 -->
+<script>
+    const wagesData = {{ wages|tojson|safe }};
+</script>
+
+<!-- 外部JavaScriptファイルを読み込む -->
+<script src="{{ url_for('static', filename='money.js') }}"></script>
+</html>
