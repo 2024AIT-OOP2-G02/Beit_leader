@@ -1,21 +1,26 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from models import initialize_database, User
-from routes.money import calculate_wages, get_monthly_earnings
+from routes.money import calculate_wages
 from routes.income_analyzer import calc_total_income
+from routes.user_info import user_bp
 
 app = Flask(__name__)
 
 # データベースの初期化
 initialize_database()
-
-
-# デフォルトページ（index.html）を表示
+# add用
+app.register_blueprint(user_bp)
+#デフォルトページ（index.html）を表示
 @app.route('/', methods=['GET'])
 def home():
-    if User.name==None:
-        return render_template('user_add.html')
+
+    userCount = User.select().count()
+
+    if userCount==0:
+        return redirect('/add')
     else:
         return render_template('index.html')
+    
 
 ##↓↓賃金計算↓↓
 @app.route('/wages', methods=['GET'])
@@ -30,9 +35,7 @@ def display_wages():
 @app.route('/103_graph', methods=['GET'])
 def display_103_graph():
     total_income = calc_total_income(calculate_wages())
-    monthly_earnings=get_monthly_earnings()
-    return render_template('total_income.html', total_income=total_income, monthly_earnings=monthly_earnings)
+    return render_template('total_income.html', total_income = total_income)
 
 if __name__ == '__main__':
   app.run(debug=True)
-
