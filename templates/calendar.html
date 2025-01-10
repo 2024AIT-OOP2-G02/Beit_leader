@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="
+https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js
+"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='calendar.css') }}">
+	<script src="{{ url_for('static', filename='calendar.js') }}" defer></script>
+	<title>Beit-Leader-test</title>
+</head>
+
+
+<body>
+	<dialog id="modal">
+		<button autofocus>閉じる</button>
+		<div id="modal-text">
+			<p>シフトの日時を入力</p>
+			<div id="modal-box">
+				<form class="modal-form">
+					<label for="shift">日付</label>
+					<input type="date" id="shift-date" name="shift-date">
+					<label for="shift">シフト開始</label>
+					<input type="time" id="shift-in" name="shift-in">
+					<label for="shift">シフト終了</label>
+					<input type="time" id="shift-out" name="shift-out">
+					<input type="button" value="登録" id="shift-button" onclick="buttonClick()">
+				</form>
+				<p id="warn-text">日付を入力してね</p>
+			</div>
+		</div>
+	</dialog>
+	<div id="contents">
+		<h1 id="header">シフト登録</h1>
+		<div id="main">
+			<div id="side">
+				<!-- <form class="shift-form">
+					<label for="shift">日付</label>
+					<input type="date" id="shift-date" name="shift-date">
+					<label for="shift">シフト開始</label>
+					<input type="time" id="shift-in" name="shift-in">
+					<label for="shift">シフト終了</label>
+					<input type="time" id="shift-out" name="shift-out">
+					<input type="button" value="登録" id="shift-button" onclick="buttonClick()">
+				</form>
+				<p id="warn-text">日付を入力してね</p> -->
+			</div>
+			<div id="main-contents">
+				<div id="calendar"></div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
