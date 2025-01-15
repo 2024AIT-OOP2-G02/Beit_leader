@@ -22,28 +22,38 @@ h2 {
 
 /*money.htmlのcssここから*/
 .wage-header h1 {
+    font-size: 1.5rem;
+    margin-left: 10px;
+    height: 60px;
+    align-items: center;
+    display: flex;
     margin-top: 0;
-    margin-left: 0;
     margin-bottom: 0;
 }
 .wage-header {
-    padding-left: 1%;
-    padding-right: 1%;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    margin: 0;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
     background-color: #82b4fc;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
 .change-page {
+    margin-right: 10px;
     text-decoration: none;
     border-bottom: 2px solid black;
     padding-bottom: 3px;
 }
 
 #money-main {
+    padding-top: 5%;
     font-size: 20px;
     padding-bottom: 5%;
 }
