@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>シフト管理アプリ</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='base-style.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>バイトリーダー</h1>
+    </header>
+    <main>
+      <form action="{{ url_for('shop.add')}}" method="post">
+        <label
+          >バイト先:
+          <input
+            type="text"
+            name="company_id"
+            value="{{ company_id }}"
+            required /></label
+        ><br />
+        <label
+          >平日時給:
+          <input
+            type="number"
+            name="weekday_wage"
+            value="{{ weekday_wage }}"
+            required /></label
+        ><br />
+        <label
+          >休日時給:
+          <input
+            type="number"
+            name="holiday_wage"
+            value="{{ holyday_wage }}"
+            required /></label
+        ><br />
+        <input type="submit" value="追加" class="button" />
+      </form>
+      <tbody>
+        {% for product in shops %}
+        <tr>
+            <td>{{ product.location }}</td>
+            <td>{{ product.weekday_wage }}</td>
+            <td>{{ product.holiday_wage }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </main>
+  </body>
+  <footer>
+    <p>2024 シフト管理アプリ</p>
+  </footer>
+</html>

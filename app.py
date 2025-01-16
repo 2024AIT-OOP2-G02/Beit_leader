@@ -1,8 +1,9 @@
 from flask import Flask, render_template, redirect, url_for
 from models import initialize_database, User
-from routes.money import calculate_wages
+from routes.money import calculate_wages, get_monthly_earnings
 from routes.income_analyzer import calc_total_income
 from routes.user_info import user_bp
+from routes.shop import shop_bp
 
 app = Flask(__name__)
 
@@ -10,6 +11,7 @@ app = Flask(__name__)
 initialize_database()
 # add用
 app.register_blueprint(user_bp)
+app.register_blueprint(shop_bp)
 #デフォルトページ（index.html）を表示
 @app.route('/', methods=['GET'])
 def home():
