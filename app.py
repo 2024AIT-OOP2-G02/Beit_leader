@@ -27,9 +27,11 @@ def home():
 def display_wages():
     # バイトごとの給与を計算
     wages_dict = calculate_wages()
+    total_income = calc_total_income(calculate_wages())
+    monthly_earnings=get_monthly_earnings()
     
     # 計算結果をHTMLテンプレートに渡す
-    return render_template('money.html', wages=wages_dict)
+    return render_template('money.html', wages=wages_dict ,total_income=total_income, monthly_earnings=monthly_earnings)
 
 # 合計給与の計算・103万グラフの描画
 @app.route('/103_graph', methods=['GET'])
