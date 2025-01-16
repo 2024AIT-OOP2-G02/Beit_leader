@@ -1,4 +1,4 @@
-from peewee import Model,CharField,FloatField,IntegerField
+from peewee import Model,CharField,IntegerField
 from .db import db
 
 class Wage(Model):
