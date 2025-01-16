@@ -2,9 +2,10 @@ from flask import Flask, render_template
 from models import initialize_database, User
 from routes.money import calculate_wages, get_monthly_earnings
 from routes.income_analyzer import calc_total_income
+from routes.calendar import calendar_bp
 
 app = Flask(__name__)
-
+app.register_blueprint(calendar_bp)
 # データベースの初期化
 initialize_database()
 
@@ -40,5 +41,5 @@ def display_calendar():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8888)
 
