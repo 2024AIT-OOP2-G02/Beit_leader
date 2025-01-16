@@ -30,6 +30,7 @@
 ### 必要ライブラリ
 - peewee
 - flask
+- datatime
 
 ### 実行環境
 python 3.12.5以降
