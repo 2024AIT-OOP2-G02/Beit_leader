@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 from models import initialize_database, User
-from routes.money import calculate_wages
+from routes.money import calculate_wages, get_monthly_earnings
 from routes.income_analyzer import calc_total_income
 from routes.user_info import user_bp
 
@@ -27,15 +27,23 @@ def home():
 def display_wages():
     # バイトごとの給与を計算
     wages_dict = calculate_wages()
+    total_income = calc_total_income(calculate_wages())
+    monthly_earnings=get_monthly_earnings()
     
     # 計算結果をHTMLテンプレートに渡す
-    return render_template('money.html', wages=wages_dict)
+    return render_template('money.html', wages=wages_dict ,total_income=total_income, monthly_earnings=monthly_earnings)
 
 # 合計給与の計算・103万グラフの描画
 @app.route('/103_graph', methods=['GET'])
 def display_103_graph():
     total_income = calc_total_income(calculate_wages())
     return render_template('total_income.html', total_income = total_income)
+
+
+@app.route('/calendar', methods=['GET'])
+def display_calendar():
+    return render_template('calendar.html')
+
 
 if __name__ == '__main__':
   app.run(debug=True)
