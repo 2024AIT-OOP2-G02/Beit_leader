@@ -1,13 +1,10 @@
-from peewee import Model, ForeignKeyField, CharField,FloatField
+from peewee import Model,CharField,FloatField
 from .db import db
-from .user import User
 
 class Wage(Model):
-    user = ForeignKeyField(User, backref='wages')
-    location = CharField()
-    weekday_wage = FloatField()
-    holyday_wage = FloatField()
+    location = CharField() # 勤務地
+    weekday_wage = FloatField() # 平日時給
+    holiday_wage = FloatField() # 休日時給
     
-
     class Meta:
         database = db

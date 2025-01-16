@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,36 +8,61 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-    <header>
-        <h1>給料計算結果</h1>
+    <header class="wage-header">
+        <h1>Beit leader</h1>
+        <a href="{{ url_for('display_calendar') }}" class="change-page">カレンダーへ</a>
     </header>
 
     <main id="money-main">
-        <h2>バイト先の収入</h2>
-        <table class="money-table">
-            <thead>
-                <tr>
-                    <th>バイト先</th>
-                    <th>合計給与</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for location, salary in wages.items() %}
-                <tr>
-                    <td>{{ location }}</td>
-                    <td>{{ salary }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    
-        <h2>収入の棒グラフ</h2>
-        <div class="graph-container">
-            <canvas id="salary-graph"></canvas>
+
+        <div>
+            <div class="gauge-graph-box">
+                <p class="gauge-graph-title">103万の壁</p>
+                <div class="graph-container">
+                    <div id="total_income_graph_container" data-total-income="{{ total_income }}"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <p class="total-wages-text">見込み稼ぎ<span>127</span>万円</p>
+                    <p class="total-wages-text">合計収入<span>87</span>万円</p>
+                </div>
+            </div>
+            <div class="wage-box">
+                <div class="wages-box-graph">
+                    <h2>店舗別給与</h2>
+                    <p id="total-wages"></p>
+                    <canvas id="salary-graph"></canvas>
+                    <!-- <table class="money-table">
+                        <thead>
+                            <tr>
+                                <th>バイト先</th>
+                                <th>合計給与</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for location, salary in wages.items() %}
+                            <tr>
+                                <td>{{ location }}</td>
+                                <td>{{ salary }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table> -->
+                </div>
+                <div class="wages-box-graph">
+                    <h2>月別給与</h2>
+                    <p id="wages-by-month"></p>
+                    <div class="graph-container">
+                        <div id="monthly_earnings_graph_container"
+                            data-monthly-earnings='{{ monthly_earnings | tojson }}'></div>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </main>
-    
+
     <footer>
         <p>&copy; 2024 シフト管理アプリ</p>
     </footer>
@@ -44,9 +70,12 @@
 
 <!-- Pythonで渡されたデータをJavaScript変数として定義 -->
 <script>
-    const wagesData = {{ wages|tojson|safe }};
+    const wagesData = {{ wages| tojson | safe }};
 </script>
 
 <!-- 外部JavaScriptファイルを読み込む -->
 <script src="{{ url_for('static', filename='money.js') }}"></script>
+<script src="{{ url_for('static', filename='total_income_graph.js') }}" defer></script>
+<script src="{{ url_for('static', filename='monthly_earnings_graph.js') }}" defer></script>
+
 </html>
