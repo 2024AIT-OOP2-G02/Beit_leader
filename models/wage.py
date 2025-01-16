@@ -6,6 +6,5 @@ class Wage(Model):
     weekday_wage = FloatField() # 平日時給
     holiday_wage = FloatField() # 休日時給
     
-
     class Meta:
         database = db

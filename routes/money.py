@@ -1,6 +1,4 @@
-# money.py
-from peewee import fn
-from flask import Flask, render_template
+from flask import Flask
 
 # ダミーデータ1
 #ユーザー登録から読み取る
@@ -15,7 +13,7 @@ def get_dummy_data():
 
 #ダミーデータ2
 #カレンダーから受け取る
-def get_dummy_tathunami():
+def get_dummy_data2():
     return[ {'location': '手打ちうどん恵那', 'work_time': 5.5, 'is_holyday': False},
             {'location': 'ソルジェンテ', 'work_time': 4.0, 'is_holyday': True},
             {'location': 'ご縁どり', 'work_time': 8.0, 'is_holyday': False},
@@ -27,7 +25,7 @@ app = Flask(__name__)
 
 def calculate_wages():
     data1 = get_dummy_data()
-    data2 = get_dummy_tathunami()
+    data2 = get_dummy_data2()
 
     # 賃金計算結果を格納する辞書
     wages = {}
