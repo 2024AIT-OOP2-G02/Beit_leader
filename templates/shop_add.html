@@ -41,7 +41,15 @@
         ><br />
         <input type="submit" value="追加" class="button" />
       </form>
-      <tbody>
+        <table>
+          <thead>
+            <tr>
+              <th>バイト先</th>
+              <th>平日時給</th>
+              <th>休日時給</th>
+            </tr>
+          </thead>
+          <tbody>
             {% for product in shops %}
             <tr>
                 <td>{{ product.location }}</td>
@@ -50,6 +58,7 @@
             </tr>
             {% endfor %}
         </tbody>
+      </table>
     </main>
   </body>
   <footer>
