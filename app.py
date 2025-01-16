@@ -37,5 +37,11 @@ def display_103_graph():
     total_income = calc_total_income(calculate_wages())
     return render_template('total_income.html', total_income = total_income)
 
+
+@app.route('/calendar', methods=['GET'])
+def display_calendar():
+    return render_template('calendar.html')
+
+
 if __name__ == '__main__':
   app.run(debug=True)
