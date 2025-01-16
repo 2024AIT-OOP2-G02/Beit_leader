@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 from models import initialize_database, User
-from routes.money import calculate_wages
+from routes.money import calculate_wages, get_monthly_earnings
 from routes.income_analyzer import calc_total_income
 from routes.user_info import user_bp
 
