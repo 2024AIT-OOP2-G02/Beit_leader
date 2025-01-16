@@ -33,5 +33,5 @@ def edit(User_id):
         return redirect(url_for('user.list'))
 
     users = User.select()
-    products = Product.select()
+    products = User.select()
     return render_template('user_edit.html', user=user, users=users, products=products)
