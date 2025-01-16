@@ -2,56 +2,51 @@
 <html lang="ja">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="
-https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js
-"></script>
-	<link rel="stylesheet" href="{{ url_for('static', filename='calendar.css') }}">
-	<script src="{{ url_for('static', filename='calendar.js') }}" defer></script>
-	<title>Beit-Leader-test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='calendar.css') }}">
+    <script src="{{ url_for('static', filename='calendar.js') }}" defer></script>
+    <title>シフト登録</title>
 </head>
 
-
 <body>
-	<dialog id="modal">
-		<button autofocus>閉じる</button>
-		<div id="modal-text">
-			<p>シフトの日時を入力</p>
-			<div id="modal-box">
-				<form class="modal-form" action="/calendar" method="post" >
-					<label for="shift">日付</label>
-					<input type="date" id="shift-date" name="shift_date" value="{{shift_date}}" required />
-					<label for="shift">シフト開始</label>
-					<input type="time" id="shift-in" name="shift_in" value="{{shift_in}}" required />
-					<label for="shift">シフト終了</label>
-					<input type="time" id="shift-out" name="shift_out" value="{{shift_out}}" required />
-					<input type="submit" value="登録" id="shift-button" onclick="buttonClick()">
-				</form>
-				<p id="warn-text">日付を入力してね</p>
-			</div>
-		</div>
-	</dialog>
-	<div id="contents">
-		<h1 id="header">シフト登録</h1>
-		<div id="main">
-			<div id="side">
-				<!-- <form class="shift-form">
-					<label for="shift">日付</label>
-					<input type="date" id="shift-date" name="shift-date">
-					<label for="shift">シフト開始</label>
-					<input type="time" id="shift-in" name="shift-in">
-					<label for="shift">シフト終了</label>
-					<input type="time" id="shift-out" name="shift-out">
-					<input type="submit" value="登録" id="shift-button" onclick="buttonClick()">
-				</form>
-				<p id="warn-text">日付を入力してね</p> -->
-			</div>
-			<div id="main-contents">
-				<div id="calendar"></div>
-			</div>
-		</div>
-	</div>
+    <dialog id="modal">
+        <button autofocus>閉じる</button>
+        <div id="modal-text">
+            <p>シフトの日時を入力</p>
+            <div id="modal-box">
+                <form class="modal-form" action="/calendar" method="post">
+                    <label for="shift">日付</label>
+                    <input type="date" id="shift-date" name="shift_date" required />
+                    <label for="shift">シフト開始</label>
+                    <input type="time" id="shift-in" name="shift_in" required />
+                    <label for="shift">シフト終了</label>
+                    <input type="time" id="shift-out" name="shift_out" required />
+                    <label>店舗名：
+                        <select name="location" required>
+                            {% for shop in shops %}
+                                <option value="{{ shop.location }}">{{ shop.location }}</option>
+                            {% endfor %}
+                        </select>
+                    </label><br>
+                    <input type="submit" value="登録" id="shift-button">
+                </form>
+                <p id="warn-text">日付を入力してね</p>
+            </div>
+        </div>
+    </dialog>
+    <div id="contents">
+        <h1 id="header">シフト登録</h1>
+        <div id="main">
+            <div id="side">
+                <!-- サイドバーの内容 -->
+            </div>
+            <div id="main-contents">
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

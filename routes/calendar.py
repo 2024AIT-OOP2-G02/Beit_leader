@@ -1,51 +1,40 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from models import Shift
-from datetime import datetime
+from models import Shift, Wage
 from datetime import datetime as dt
-from peewee import fn
-
-# from django.utils import timezone
 
 # Blueprintの作成
 calendar_bp = Blueprint('calendar', __name__, url_prefix='/calendar')
 
-
 @calendar_bp.route('/', methods=['GET', 'POST'])
 def add():
-        if request.method == 'POST':
-            shift_date = request.form['shift_date']
-            shift_out = request.form['shift_out']
-            shift_in = request.form['shift_in']
-            
-            shift_date = dt.strptime(shift_date, '%Y-%m-%d')
-            # tdatetime = datetime.datetime.strptime(shift_date, '%Y-%m-%d %H:%M:%S')
-            # shift_date = datetime.date(tdatetime.year, tdatetime.month, tdatetime.day)
-            print("_________________________________________________________________________")
-            print("datetime成功")
-            print("_________________________________________________________________________")
-            # datetime_obj = datetime.strptime(shift_date, '%Y-%m-%d')
-            # tdatetime = datetime.datetime.strptime(shift_in, '%H:%M:%S')
-            # shift_in = datetime.date(tdatetime.hour, tdatetime.minute, tdatetime.second)
-            # tdatetime = datetime.datetime.strptime(shift_out, '%H:%M:%S')
-            # shift_out = datetime.date(tdatetime.hour, tdatetime.minute, tdatetime.second)
-            shift_in = dt.strptime(shift_in, '%H:%M')
-            shift_out = dt.strptime(shift_out, '%H:%M')
-            print("_________________________________________________________________________")
-            print(type(shift_date))
-            print("_________________________________________________________________________")
-            # datetime_obj = datetime.strptime(shift_date, '%Y-%m-%d')
-            # model_instance.date_field = datetime_obj
-            Shift.create(start_time=shift_in,finish_time=shift_out)
-            print("_________________________________________________________________________")
-            print("unko2")
-            print("_________________________________________________________________________")
-            return redirect(url_for('calendar.add'))
-        print("_________________________________________________________________________")
-        print("unko3")
-        print("_________________________________________________________________________")
-        return render_template('calendar.html')
-        
-        # users = User.select()
-        # wages = Wage.select()
-        # return render_template('user_add.html', users=users,wages = wages)
-        
+    if request.method == 'POST':
+        # フォームからデータを取得
+        shift_date = request.form['shift_date']
+        shift_in = request.form['shift_in']
+        shift_out = request.form['shift_out']
+        location = request.form['location']
+
+        # 日付と時間を結合してdatetimeオブジェクトに変換
+        start_time = dt.strptime(f"{shift_date} {shift_in}", '%Y-%m-%d %H:%M')
+        finish_time = dt.strptime(f"{shift_date} {shift_out}", '%Y-%m-%d %H:%M')
+
+        # Wageテーブルからlocationに対応するwage_idを取得
+        wage = Wage.get_or_none(Wage.location == location)
+        if not wage:
+            # もし該当するWageがなければ、新しいWageを作成
+            wage = Wage.create(location=location, weekday_wage=0, holiday_wage=0)
+
+        # Shiftテーブルに新しいシフトを追加
+        Shift.create(
+            wage=wage,
+            work_time=(finish_time - start_time).total_seconds() / 3600,  # 勤務時間を計算
+            start_time=start_time,
+            finish_time=finish_time,
+            is_holiday=False  # 休日かどうかはデフォルトでFalse
+        )
+
+        return redirect(url_for('calendar.add'))
+
+    # GETリクエストの場合、Wageテーブルから店舗のリストを取得
+    wages = Wage.select()
+    return render_template('calendar.html', shops=wages)
