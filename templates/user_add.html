@@ -1,21 +1,57 @@
 <!DOCTYPE html>
 <html lang="ja">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>シフト管理アプリ</title>
-		<link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
-	</head>
-	<body>
-		<header>
-			<h1>バイトリーダー</h1>
-		</header>
-		<main>
-			<li><a href="{{ url_for('display_wages') }}">給与参照</a></li>
-			<li><a href="{{ url_for('display_103_graph')}}">合計給与参照</a></li>
-			<li><a href="{{ url_for('display_calendar')}}">カレンダー</a></li>
-		</main>
-		<footer>
-			<p>© 2024 TTTTTTTT</p>
-		</footer>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>シフト管理アプリ</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='base-style.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>バイトリーダー</h1>
+    </header>
+    <main>
+      <form action="/add" method="post">
+        <label
+          >名前:
+          <input
+            type="text"
+            name="user_id"
+            value="{{ user_id }}"
+            required /></label
+        ><br />
+        <label
+          >バイト先:
+          <input
+            type="number"
+            name="company_id"
+            value="{{ company_id }}"
+            required /></label
+        ><br />
+        <label
+          >平日時給:
+          <input
+            type="number"
+            name="weekday_wage"
+            value="{{ weekday_wage }}"
+            required /></label
+        ><br />
+        <label
+          >休日時給:
+          <input
+            type="number"
+            name="holiday_wage"
+            value="{{ holyday_wage }}"
+            required /></label
+        ><br />
+        <input type="submit" value="次へ" class="button" />
+      </form>
+    </main>
+  </body>
+  <footer>
+    <p>2024 シフト管理アプリ</p>
+  </footer>
 </html>
