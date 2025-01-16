@@ -19,16 +19,16 @@
                     value="{{ user_id }}"
                     required 
                 />
-            </label><br />
+            </label><br/>
             
             <label>バイト先:
                 <input
-                    type="number"
+                    type="text"
                     name="company_id"
                     value="{{ company_id }}"
                     required 
                 />
-            </label><br />
+            </label><br/>
             
             <label>平日時給:
                 <input
@@ -37,7 +37,7 @@
                     value="{{ weekday_wage }}"
                     required 
                 />
-            </label><br />
+            </label><br/>
             
             <label>休日時給:
                 <input
@@ -45,9 +45,9 @@
                     name="holiday_wage"
                     value="{{ holyday_wage }}"
                     required 
-            />
+                />
+            </label><br/>
             
-            </label><br />
             <input type="submit" value="次へ" class="button" />
         </form>
     </main>
