@@ -4,6 +4,8 @@ from routes.money import calculate_wages, get_monthly_earnings
 from routes.income_analyzer import calc_total_income
 from routes.user_info import user_bp
 from routes.shop import shop_bp
+from routes.calendar import calendar_bp
+from models import Wage
 
 app = Flask(__name__)
 
@@ -13,6 +15,7 @@ initialize_database()
 # add用
 app.register_blueprint(user_bp)
 app.register_blueprint(shop_bp)
+app.register_blueprint(calendar_bp)
 #デフォルトページ（index.html）を表示
 @app.route('/', methods=['GET'])
 def home():
@@ -44,7 +47,11 @@ def display_103_graph():
 # カレンダーの表示
 @app.route('/calendar', methods=['GET'])
 def display_calendar():
-    return render_template('calendar.html')
+    wages = Wage.select()
+    # print("------------------------------------")
+    # print("unko3")
+    # print("------------------------------------")
+    return render_template('calendar.html', shops=wages)
 
 # メイン関数
 if __name__ == '__main__':
