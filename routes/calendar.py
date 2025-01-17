@@ -9,9 +9,6 @@ calendar_bp = Blueprint('calendar', __name__, url_prefix='/calendar')
 @calendar_bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
-        print("------------------------------------")
-        print("unko3")
-        print("------------------------------------")
         # calendar.py
         try:
             shift_date = request.form['shift_date']
@@ -30,9 +27,6 @@ def add():
         wage = Wage.get_or_none(Wage.location == location)
         if not wage:
             # もし該当するWageがなければ、新しいWageを作成
-            print("------------------------------------")
-            print("unko3")
-            print("------------------------------------")
             wage = Wage.create(location=location, weekday_wage=0, holiday_wage=0)
 
         # Shiftテーブルに新しいシフトを追加
@@ -55,12 +49,6 @@ def index():
     wages = Wage.select()
     shifts = Shift.select()
 
-    print("------------------------------------")
-    print(wages)
-    print("------------------------------------")
-    # if not wage:
-    #     print("------------------------------------")
-    #     print("unko3")
-    #     print("------------------------------------")
 
     return render_template('calendar.html', shops=wages,shifts=shifts)  # shiftsはシフト表示用です
+
