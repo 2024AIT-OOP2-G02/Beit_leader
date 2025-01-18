@@ -20,13 +20,13 @@ header {
     align-items: center;
 }
 
-h1 {
+h1,
+h2 {
     margin: 0;
 }
 
 main {
     font-size: 30px;
-    margin-top: 2%;
     height: auto;
 }
 
@@ -38,6 +38,7 @@ form {
     width: 50%;
     padding: 20px;
     border-radius: 20px;
+    font-weight: bold;
 }
 
 label {
@@ -45,6 +46,7 @@ label {
     width: 80%;
     text-align: left;
     font-size: 20px;
+    color: rgba(0, 0, 0, 0.5);
 }
 
 input {
@@ -73,135 +75,3 @@ footer {
     width: 100%;
     background: rgba(33, 150, 243, 0.5);
 }
-
-/*money.htmlのcssここから*/
-.wage-header h1 {
-    font-size: 1.5rem;
-    margin-left: 10px;
-    height: 60px;
-    align-items: center;
-    display: flex;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-.wage-header {
-    margin: 0;
-    position: fixed;
-    text-align: center;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    background-color: #82b4fc;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.change-page {
-    margin-right: 10px;
-    text-decoration: none;
-    border-bottom: 2px solid black;
-    padding-bottom: 3px;
-}
-
-#money-main {
-    padding: 5px 5% 5px 5%;
-    font-size: 20px;
-}
-
-.money-table {
-    width: 50%;
-    border-collapse: collapse; /* 罫線の重なりを防ぐ */
-    margin-bottom: 20px; /* 表と他の要素の間隔を調整 */
-    margin: 0 auto;
-}
-
-.money-table th,
-.money-table td {
-    border: 1px solid #ddd; /* 罫線の色とスタイル */
-    text-align: left; /* テキストを左寄せ */
-    padding: 8px; /* セル内の余白 */
-}
-
-.money-table thead th {
-    background-color: #f2f2f2; /* ヘッダー部分の背景色 */
-}
-
-.money-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9; /* 偶数行の背景色 */
-}
-
-.money-table tbody tr:hover {
-    background-color: #f1f1f1; /* ホバー時の背景色 */
-}
-
-.graph-container {
-    width: 100%; /* グラフの幅を全体の80%に設定 */
-    max-width: 800px; /* 最大幅を800pxに制限 */
-    margin: 0 auto; /* グラフを中央に配置 */
-    padding: 0px; /*コンテナ内の余白 */
-    /* background-color: #f9f9f9; 背景色 */
-    /* border: 1px solid #ddd; 枠線 */
-    border-radius: 8px; /* 角丸の適用 */
-    /* margin-bottom: 100px; フッターとの間に余白を追加 */
-}
-
-/* グラフ自体のスタイル */
-#salary-graph {
-    width: 100%; /* 親要素の幅に合わせる */
-    height: 400px; /* 固定の高さを設定 */
-    display: block; /* キャンバスをブロック要素にする */
-}
-.gauge-graph-box {
-    margin: 0 auto;
-    width: 95%;
-}
-
-.gauge-graph-title {
-    font-size: 30px;
-    text-align: center;
-}
-
-.gauge-graph-box p {
-    font-weight: bold;
-}
-
-.total-wages-text {
-    border-bottom: 3px solid black;
-    box-sizing: border-box;
-}
-
-.total-wages-text span {
-    font-size: 40px;
-    color: red;
-}
-
-.wages-graph-box {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    gap: 5%;
-}
-
-.wage-box {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    gap: 3%;
-}
-
-.wages-box-graph {
-    padding: 3%;
-    border: 3px solid black;
-    box-sizing: border-box;
-    border-radius: 30px;
-    text-align: center;
-    width: 100%;
-    height: auto;
-}
-
-/*money.htmlのcssここまで*/

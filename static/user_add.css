@@ -2,6 +2,19 @@
 
 .user-add-main {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    margin-top: 2%;
+    height: auto;
+}
+
+.user-add-form {
+    margin-bottom: 5%;
+}
+
+.user-add-form h2 {
+    border-bottom: 2px solid black;
+    width: fit-content;
+    text-align: center;
+    margin-bottom: 1%;
 }

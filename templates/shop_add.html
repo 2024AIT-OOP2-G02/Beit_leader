@@ -1,47 +1,30 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>シフト管理アプリ</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='base-style.css') }}"
-    />
-  </head>
-  <body>
-    <header>
-      <h1>バイトリーダー</h1>
-    </header>
-    <main>
-      <form action="{{ url_for('shop.add')}}" method="post">
-        <label
-          >バイト先:
-          <input
-            type="text"
-            name="company_id"
-            value="{{ company_id }}"
-            required /></label
-        ><br />
-        <label
-          >平日時給:
-          <input
-            type="number"
-            name="weekday_wage"
-            value="{{ weekday_wage }}"
-            required /></label
-        ><br />
-        <label
-          >休日時給:
-          <input
-            type="number"
-            name="holiday_wage"
-            value="{{ holyday_wage }}"
-            required /></label
-        ><br />
-        <input type="submit" value="追加" class="button" />
-      </form>
-        <table>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>シフト管理アプリ</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='shop_add.css') }}" />
+</head>
+
+<body>
+  <header>
+    <h1>バイトリーダー</h1>
+  </header>
+  <main class="shop-add-main">
+    <form action="{{ url_for('shop.add')}}" method="post" class="shop-add-form">
+      <h2>バイト先追加登録</h2>
+      <label>バイト先:
+        <input type="text" name="company_id" value="{{ company_id }}" required /></label><br />
+      <label>平日時給:
+        <input type="number" name="weekday_wage" value="{{ weekday_wage }}" required /></label><br />
+      <label>休日時給:
+        <input type="number" name="holiday_wage" value="{{ holyday_wage }}" required /></label><br />
+      <input type="submit" value="追加" class="button" />
+    </form>
+    <!-- <table>
           <thead>
             <tr>
               <th>バイト先</th>
@@ -58,10 +41,11 @@
             </tr>
             {% endfor %}
         </tbody>
-      </table>
-    </main>
-  </body>
-  <footer>
-    <p>2024 シフト管理アプリ</p>
-  </footer>
+      </table> -->
+  </main>
+</body>
+<footer>
+  <p>2024 シフト管理アプリ</p>
+</footer>
+
 </html>
