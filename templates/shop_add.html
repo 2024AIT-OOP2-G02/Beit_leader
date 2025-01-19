@@ -53,8 +53,14 @@
             {% for product in shops %}
             <tr>
                 <td>{{ product.location }}</td>
-                <td>{{ product.weekday_wage }}</td>
-                <td>{{ product.holiday_wage }}</td>
+                <td>{{ product.weekday_wage }}円</td>
+                <td>{{ product.holiday_wage }}円</td>
+                <td>
+                  <form action="{{ url_for('shop.delete') }}" method="post">
+                    <input type="hidden" name="shop_name" value="{{ product.location }}">
+                    <input type="submit" value="削除" class="button" />
+                  </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
