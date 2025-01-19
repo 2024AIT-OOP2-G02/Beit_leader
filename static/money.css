@@ -5,10 +5,16 @@
 }
 
 .change-page {
-    margin-right: 10px;
-    text-decoration: none;
-    border-bottom: 2px solid black;
-    padding-bottom: 3px;
+    margin-right: 2%;
+    font-size: 25px;
+    transition: 0.5s;
+    color: #000000;
+    /* text-decoration: none; */
+    font-weight: 900;
+}
+
+.change-page:hover {
+    color: #fff100;
 }
 
 #money-main {
@@ -66,6 +72,8 @@
 
 .gauge-graph-title {
     font-size: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     text-align: center;
 }
 

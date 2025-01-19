@@ -13,12 +13,12 @@
 <body>
     <header class="wage-header">
         <h1>バイトリーダー</h1>
-        <a href="{{ url_for('display_calendar') }}" class="change-page">カレンダーへ</a>
+        <a href="{{ url_for('display_calendar') }}" class="change-page">カレンダー</a>
     </header>
 
     <main id="money-main">
         <div class="gauge-graph-box">
-            <p class="gauge-graph-title">103万の壁</p>
+            <h2 class="gauge-graph-title">103万の壁</h2>
             <div class="graph-container">
                 <div id="total_income_graph_container" data-total-income="{{ total_income }}"></div>
             </div>
