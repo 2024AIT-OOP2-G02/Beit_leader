@@ -1,0 +1,18 @@
+/*user_add.htmlのcss*/
+
+.user-add-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2%;
+    height: auto;
+}
+
+.user-add-form {
+    margin-bottom: 5%;
+}
+
+.user-add-form h2 {
+    text-align: center;
+    margin-bottom: 1%;
+}
