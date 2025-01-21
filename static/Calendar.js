@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // フォームの送信イベントリスナー
     const form = document.querySelector(".modal-form");
     form.addEventListener("submit", function (event) {
-        event.preventDefault(); // フォームのデフォルト送信を防止
+        // event.preventDefault(); // フォームのデフォルト送信を防止
         buttonClick(); // ボタンクリック処理を実行
     });
 });

@@ -16,7 +16,7 @@
         <div id="modal-text">
             <p>シフトの日時を入力</p>
             <div id="modal-box">
-                <form class="modal-form" action="/calendar/add" method="post">
+                <form action="{{ url_for('calendar.add')}}" method="post" class="modal-form">
                     <label for="shift">日付</label>
                     <input type="date" id="shift-date" name="shift_date" required />
                     <label for="shift">シフト開始</label>
@@ -26,11 +26,11 @@
                     <label>店舗名：
                         <select name="location" required>
                             {% for shop in shops %}
-                                <option value="{{ shop.location }}">{{ shop.location }}</option>
+                            <option value="{{ shop.location }}">{{ shop.location }}</option>
                             {% endfor %}
                         </select>
                     </label><br>
-                    <input type="submit" value="登録" id="shift-button">
+                    <input type="submit" value="追加" class="button" />
                 </form>
                 <p id="warn-text">日付を入力してね</p>
             </div>
