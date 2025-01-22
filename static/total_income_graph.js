@@ -10,14 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 最大103万円を定義
     const maxAmount = 1030000;
-
-    // 現在の給与の色を決定（100万円を超えたら赤色、それ以外は青色）
-    const incomeColor = totalIncome > 1000000 ? "#FF0000" : "#2196F3";
-    const incomeBorderColor = totalIncome > 1000000 ? "#B71C1C" : "#1976D2";
+    const warningThreshold = 1000000;
 
     // Chart.jsでグラフを描画
     const ctx = canvas.getContext("2d");
-    new Chart(ctx, {
+
+    const incomeChart = new Chart(ctx, {
         type: "bar",
         data: {
             labels: ["給与比較"], // ラベルを一つにして、全て同じ位置で描画
@@ -32,8 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 {
                     label: "現在の給与",
                     data: [totalIncome], // 現在の給与データ
-                    backgroundColor: incomeColor, // 現在の給与バーの色
-                    borderColor: incomeBorderColor,
+                    backgroundColor: "#2196F3", // 現在の給与バーの色
+                    borderColor: "#1976D2",
                     borderWidth: 1,
                 },
             ],
@@ -54,8 +52,33 @@ document.addEventListener("DOMContentLoaded", () => {
                 legend: {
                     display: true, // 凡例を表示
                     position: "top", // 凡例の位置を上に設定
+                    labels: {
+                        color: totalIncome > warningThreshold ? "#FF0000" : "#000000", // 100万円を超えたらラベルを赤色に
+                    },
                 },
             },
         },
+        plugins: [
+            {
+                id: "pachinkoBlinkEffect",
+                beforeDatasetsDraw(chart) {
+                    // 103万円を超えた場合にパチンコのような点滅を実現
+                    if (totalIncome > maxAmount) {
+                        const dataset = chart.data.datasets[1]; // 現在の給与データセット
+                        const colors = ["#FF0000", "#FFFF00", "#00FF00", "#0000FF"]; // 点滅に使う色
+                        let colorIndex = 0;
+
+                        if (!chart.isBlinking) {
+                            chart.isBlinking = true;
+                            setInterval(() => {
+                                dataset.backgroundColor = colors[colorIndex]; // 色を順番に切り替え
+                                colorIndex = (colorIndex + 1) % colors.length; // 色インデックスを循環させる
+                                chart.update();
+                            }, 200); // 点滅速度（ミリ秒）
+                        }
+                    }
+                },
+            },
+        ],
     });
 });
