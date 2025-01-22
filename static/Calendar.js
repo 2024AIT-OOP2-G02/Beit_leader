@@ -98,10 +98,18 @@ document.addEventListener("DOMContentLoaded", function () {
     // カレンダーの初期化
     calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: "dayGridMonth",
+        locale: 'ja',
         headerToolbar: {
             left: "prev,next",
             center: "title",
             right: "dayGridMonth,listMonth",
+        },
+        buttonText: {
+            prev: '前月',
+            next: '次月',
+            today: '今日',
+            month: '月',
+            list: 'リスト'
         },
         events: shifts,
         showNonCurrentDates: false,
