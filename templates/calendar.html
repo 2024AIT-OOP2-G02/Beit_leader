@@ -18,11 +18,6 @@
   <body>
     <header class="calendar-header">
       <h1>バイトリーダー</h1>
-      {% for use in user %}
-      <tr>
-        <td>{{ use.name }}</td>
-      </tr>
-      {% endfor %}
       <a href="{{ url_for('display_wages') }}" class="change-page">給与参照</a>
     </header>
 
