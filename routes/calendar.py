@@ -1,5 +1,5 @@
 
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 from models import Shift, Wage
 from datetime import datetime as dt
 
@@ -70,8 +70,25 @@ def add():
             shifts = Shift.select()
             wages = Wage.select()
             shifts_list = [{
+            'id': str(shift.id),
             'start': shift.start_time.strftime('%Y-%m-%d %H:%M:%S'),
             'finish': shift.finish_time.strftime('%Y-%m-%d %H:%M:%S'),
             'title': shift.wage.location
             } for shift in shifts]
             return render_template('calendar.html', shops=wages, shifts=shifts_list)
+
+@calendar_bp.route('/delete/<int:shift_id>', methods=['GET', 'DELETE'])
+def delete_shift(shift_id):
+    print(f"削除リクエスト received - shift_id: {shift_id}, method: {request.method}")
+    try:
+        shift = Shift.get_by_id(shift_id)
+        print(f"シフト found: {shift.id}, {shift.start_time}, {shift.finish_time}")
+        shift.delete_instance()
+        print("シフト deleted successfully")
+        return jsonify({'success': True, 'message': 'シフトを削除しました'})
+    except Shift.DoesNotExist:
+        print(f"シフト not found: {shift_id}")
+        return jsonify({'success': False, 'message': 'シフトが見つかりませんでした'}), 404
+    except Exception as e:
+        print(f"Error deleting shift: {str(e)}")
+        return jsonify({'success': False, 'message': str(e)}), 500
