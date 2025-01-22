@@ -247,34 +247,68 @@ document.addEventListener("DOMContentLoaded", function () {
         const upcomingShiftsEl = document.getElementById('upcoming-shifts');
         const now = new Date();
 
-        // 今日以降のシフトをフィルタリングして日付順にソート
-        const upcomingShifts = shifts
-            .filter(shift => new Date(shift.start) >= now)
-            .sort((a, b) => new Date(a.start) - new Date(b.start))
-            .slice(0, 6); // 最大5件表示
+        // 今日以降のシフトをフィルタリング
+        const futureShifts = shifts.filter(shift => new Date(shift.start) >= now);
 
-        upcomingShiftsEl.innerHTML = upcomingShifts.length > 0
-            ? upcomingShifts.map(shift => {
-                const startDate = new Date(shift.start);
-                const endDate = new Date(shift.end);
+        // 日付ごとにシフトをグループ化
+        const shiftsByDate = futureShifts.reduce((acc, shift) => {
+            const startDate = new Date(shift.start);
+            const dateKey = startDate.toISOString().split('T')[0];
+
+            if (!acc[dateKey]) {
+                acc[dateKey] = [];
+            }
+            acc[dateKey].push(shift);
+            return acc;
+        }, {});
+
+        // 日付でソートして最初の5日分を取得
+        const sortedDates = Object.keys(shiftsByDate)
+            .sort()
+            .slice(0, 5);
+
+        upcomingShiftsEl.innerHTML = sortedDates.length > 0
+            ? sortedDates.map(dateKey => {
+                const shifts = shiftsByDate[dateKey];
+                const startDate = new Date(shifts[0].start);
                 const dateStr = startDate.toLocaleDateString('ja-JP', {
                     month: 'long',
                     day: 'numeric',
                     weekday: 'short'
                 });
-                const timeStr = `${startDate.toLocaleTimeString('ja-JP', {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                })} - ${endDate.toLocaleTimeString('ja-JP', {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                })}`;
+
+                // 最大3件まで表示し、それ以上ある場合は省略表示
+                const displayShifts = shifts.slice(0, 3);
+                const remainingCount = shifts.length - 3;
+
+                const shiftsHtml = displayShifts.map(shift => {
+                    const startDate = new Date(shift.start);
+                    const endDate = new Date(shift.end);
+                    const timeStr = `${startDate.toLocaleTimeString('ja-JP', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })} - ${endDate.toLocaleTimeString('ja-JP', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })}`;
+
+                    return `
+                        <div class="shift-schedule">
+                            <div class="shift-time">${timeStr}</div>
+                            <div class="shift-location">${shift.title}</div>
+                        </div>
+                    `;
+                }).join('');
 
                 return `
                     <div class="shift-item">
                         <div class="shift-date">${dateStr}</div>
-                        <div class="shift-time">${timeStr}</div>
-                        <div class="shift-location">${shift.title}</div>
+                        <div class="shift-schedules">
+                            ${shiftsHtml}
+                        </div>
+                        ${remainingCount > 0 ?
+                        `<div class="more-shifts">他 ${remainingCount} 件...</div>` :
+                        ''}
                     </div>
                 `;
             }).join('')

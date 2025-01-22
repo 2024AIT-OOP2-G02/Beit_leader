@@ -94,7 +94,21 @@ header {
 .shift-date {
     font-weight: bold;
     color: #2196f3;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+}
+
+.shift-schedules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.shift-schedule {
+    background-color: rgb(214, 236, 255);
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-size: 0.85em;
+    max-width: 100%;
 }
 
 .shift-time {
