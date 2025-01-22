@@ -17,16 +17,16 @@
   <body>
     <header>
       <h1>バイトリーダー</h1>
-      <h2>
+      <!-- <h2>
         <tr class="username">
-          <!-- <td>{{ user.name }}</td> -->
+          <td>{{ user.name }}</td>
           {% for use in user %}
           <tr>
             <td>{{ use.name }}</td>
           </tr>
           {% endfor %}
         </tr>
-      </h2>
+      </h2> -->
     </header>
     <main class="user-add-main">
       <form action="/add" method="post" class="user-add-form">
