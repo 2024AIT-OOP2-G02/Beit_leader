@@ -12,6 +12,7 @@ def index():
     shifts = Shift.select()
     user = User.select()
     shifts_list = [{
+        'id': str(shift.id),
         'start': shift.start_time.strftime('%Y-%m-%d %H:%M:%S'),
         'finish': shift.finish_time.strftime('%Y-%m-%d %H:%M:%S'),
         'title': shift.wage.location
