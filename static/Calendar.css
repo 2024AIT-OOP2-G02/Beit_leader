@@ -71,7 +71,6 @@ header {
     border-radius: 20px;
     padding: 20px;
     min-width: 0;
-    /* flexboxの不具合防止 */
 }
 
 #calendar {
@@ -95,6 +94,7 @@ header {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border: none;
     width: 400px;
+    margin: 0;
 }
 
 #modal button[autofocus] {
@@ -181,6 +181,7 @@ header {
     border: none;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 300px;
+    margin: 0;
 }
 
 .delete-modal-content {
