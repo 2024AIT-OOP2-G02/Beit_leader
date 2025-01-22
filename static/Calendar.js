@@ -90,7 +90,6 @@ function getDataFromDB(shifts) {
 document.addEventListener("DOMContentLoaded", function () {
     const calendarEl = document.getElementById("calendar");
     const shiftData = JSON.parse(calendarEl.dataset.shifts);
-    console.log(shiftData);
     const modal = document.getElementById("modal");
 
     const shifts = getDataFromDB(shiftData);
