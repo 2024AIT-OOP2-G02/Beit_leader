@@ -17,6 +17,6 @@ def add():
             weekday_wage = request.form['weekday_wage']
             holiday_wage = request.form['holiday_wage']
             Wage.create(location=company_id,weekday_wage=weekday_wage,holiday_wage=holiday_wage)
-            return redirect(url_for("shop.add"))
+            return redirect(url_for("display_wages"))
         wages = Wage.select()
         return render_template('shop_add.html',shops = wages)
