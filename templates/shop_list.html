@@ -12,6 +12,15 @@
   <body>
     <header>
       <h1>バイトリーダー</h1>
+      <h2>
+        <tr class="username">
+          {% for use in user %}
+          <tr>
+            <td>{{ use.name }}</td>
+          </tr>
+          {% endfor %}
+        </tr>
+      </h2>
     </header>
     <main>
       <form action="{{ url_for('shop.add')}}" method="post">
@@ -44,12 +53,12 @@
       <tbody>
         {% for product in shops %}
         <tr>
-            <td>{{ product.location }}</td>
-            <td>{{ product.weekday_wage }}</td>
-            <td>{{ product.holiday_wage }}</td>
+          <td>{{ product.location }}</td>
+          <td>{{ product.weekday_wage }}</td>
+          <td>{{ product.holiday_wage }}</td>
         </tr>
         {% endfor %}
-    </tbody>
+      </tbody>
     </main>
   </body>
   <footer>

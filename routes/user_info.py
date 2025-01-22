@@ -14,6 +14,6 @@ def add():
         User.create(name=user_id)
         Wage.create(location=company_id,weekday_wage=weekday_wage,holiday_wage=holiday_wage)
         return redirect('/')
-    users = User.select()
+    user = User.select()
     wages = Wage.select()
-    return render_template('user_add.html', users=users,wages = wages)
+    return render_template('user_add.html', user=user,wages = wages)

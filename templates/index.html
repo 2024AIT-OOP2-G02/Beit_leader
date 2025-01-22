@@ -13,6 +13,16 @@
   <body>
     <header>
       <h1>バイトリーダー</h1>
+      <h2>
+        <tr class="username">
+          <!-- <td>{{ user }}</td> -->
+		  {% for use in user %}
+          <tr>
+            <td>{{ use.name }}</td>
+          </tr>
+          {% endfor %}
+        </tr>
+      </h2>
     </header>
     <main>
       <li><a href="{{ url_for('display_wages') }}">給与参照</a></li>
