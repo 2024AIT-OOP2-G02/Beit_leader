@@ -12,13 +12,6 @@
     <body>
         <header class="wage-header">
             <h1>バイトリーダー</h1>
-            <h2>
-                {% for use in user %}
-                <tr>
-                    <td>{{ use.name }}</td>
-                </tr>
-                {% endfor %}
-            </h2>
             <a href="{{ url_for('calendar.index') }}" class="change-page">カレンダー</a>
         </header>
 
@@ -38,28 +31,12 @@
                     <h2>店舗別給与</h2>
                     <p id="total-wages"></p>
                     <canvas id="salary-graph"></canvas>
-                    <!-- <table class="money-table">
-                        <thead>
-                            <tr>
-                                <th>バイト先</th>
-                                <th>合計給与</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for location, salary in wages.items() %}
-                            <tr>
-                                <td>{{ location }}</td>
-                                <td>{{ salary }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table> -->
                 </div>
                 <div class="wages-box-graph">
                     <h2>月別給与</h2>
                     <p id="wages-by-month"></p>
                     <div class="graph-container">
-                        <div id="monthly_earnings_graph_container" data-monthly-earnings="{{ monthly_earnings | tojson }}"></div>
+                        <div id="monthly_earnings_graph_container" data-monthly-earnings='{{ monthly_earnings | tojson }}''></div>
                     </div>
                 </div>
             </div>
