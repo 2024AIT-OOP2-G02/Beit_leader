@@ -13,11 +13,10 @@
 <body>
     <header class="calendar-header">
         <h1>バイトリーダー</h1>
-      <div>
+        <div>
         <a href="{{ url_for('shop.add') }}" class="change-page">バイト先追加</a>
         <a href="{{ url_for('display_wages') }}" class="change-page">給与参照</a>
-      </div>
-    
+      </div>    
     </header>
 
     <main>
@@ -60,7 +59,10 @@
         <div id="contents">
             <div id="main">
                 <div id="side">
-                    <!-- サイドバーの内容 -->
+                    <h2>今後の予定</h2>
+                    <div id="upcoming-shifts">
+                        <!-- JavaScriptで予定が動的に挿入されます -->
+                    </div>
                 </div>
                 <div id="main-contents">
                     <div id="calendar" data-shifts='{{ shifts | tojson}}'></div>
@@ -70,7 +72,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 シフト管理アプリ</p>
+        <p>2024 シフト管理アプリ</p>
     </footer>
 </body>
 
