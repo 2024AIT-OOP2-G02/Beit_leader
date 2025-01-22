@@ -11,13 +11,6 @@
     <body>
         <header>
             <h1>バイトリーダー</h1>
-            <h2>
-                {% for use in user %}
-                <tr>
-                    <td>{{ use.name }}</td>
-                </tr>
-                {% endfor %}
-            </h2>
         </header>
         <main class="shop-add-main">
             <form action="{{ url_for('shop.add')}}" method="post" class="shop-add-form">
