@@ -74,6 +74,7 @@ function getDataFromDB(shifts) {
     for (let i = 0; i < Object.keys(shifts).length; i++) {
         const elem = shifts[i];
         array.push({
+            id: elem.id,
             title: elem.title,
             start: elem.start,
             end: elem.finish,
@@ -130,6 +131,80 @@ document.addEventListener("DOMContentLoaded", function () {
                 dateInput.value = info.dateStr;
             }
         },
+        eventClick: function (info) {
+            console.log('Event Info:', {
+                id: info.event.id,
+                title: info.event.title,
+                start: info.event.startStr,
+                end: info.event.endStr
+            });
+
+            const deleteModal = document.getElementById("delete-modal");
+            const confirmDeleteBtn = document.getElementById("confirm-delete");
+            const cancelDeleteBtn = document.getElementById("cancel-delete");
+
+            if (!info.event.id) {
+                console.error('シフトIDが見つかりません');
+                alert('シフトIDが見つかりません');
+                return;
+            }
+
+            // 削除確認モーダルを表示
+            deleteModal.showModal();
+
+            // キャンセルボタンのイベントリスナー
+            const cancelHandler = () => {
+                deleteModal.close();
+                // イベントリスナーを削除
+                cancelDeleteBtn.removeEventListener('click', cancelHandler);
+                confirmDeleteBtn.removeEventListener('click', confirmHandler);
+            };
+
+            // 削除確認ボタンのイベントリスナー
+            const confirmHandler = () => {
+                const url = `/calendar/delete/${info.event.id}`;
+                console.log('Delete URL:', url);
+
+                fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        console.log('Response status:', response.status);
+                        if (!response.ok) {
+                            return response.json().then(err => {
+                                throw new Error(err.message || `HTTP error! status: ${response.status}`);
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            info.event.remove();
+                            console.log('シフトを削除しました');
+                        } else {
+                            throw new Error(data.message || 'シフトの削除に失敗しました');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('シフトの削除中にエラーが発生しました: ' + error.message);
+                    })
+                    .finally(() => {
+                        deleteModal.close();
+                        // イベントリスナーを削除
+                        cancelDeleteBtn.removeEventListener('click', cancelHandler);
+                        confirmDeleteBtn.removeEventListener('click', confirmHandler);
+                    });
+            };
+
+            // イベントリスナーを追加
+            cancelDeleteBtn.addEventListener('click', cancelHandler);
+            confirmDeleteBtn.addEventListener('click', confirmHandler);
+        }
     });
 
     calendar.render();
