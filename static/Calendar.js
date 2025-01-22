@@ -98,10 +98,18 @@ document.addEventListener("DOMContentLoaded", function () {
     // カレンダーの初期化
     calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: "dayGridMonth",
+        locale: 'ja',
         headerToolbar: {
             left: "prev,next",
             center: "title",
             right: "dayGridMonth,listMonth",
+        },
+        buttonText: {
+            prev: '前月',
+            next: '次月',
+            today: '今日',
+            month: '月',
+            list: 'リスト'
         },
         events: shifts,
         showNonCurrentDates: false,
@@ -117,11 +125,36 @@ document.addEventListener("DOMContentLoaded", function () {
             meridiem: false,
         },
         eventDidMount: function (info) {
+            // イベントのスタイリング
+            info.el.style.borderRadius = '5px';
+            info.el.style.padding = '2px 5px';
+            info.el.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            info.el.style.border = 'none';
+
             if (info.event.extendedProps.status === "done") {
-                info.el.style.backgroundColor = "red";
+                info.el.style.backgroundColor = '#FFB7C5';  // 優しいピンク
+                info.el.style.color = '#8B4513';  // ダークブラウン
             } else {
-                info.el.style.backgroundColor = "yellow";
+                info.el.style.backgroundColor = '#ADD8E6';  // 薄い水色
+                info.el.style.color = '#2F4F4F';  // ダークスレートグレー
             }
+
+            // ホバー時の色変更を設定
+            info.el.addEventListener('mouseover', function () {
+                if (info.event.extendedProps.status === "done") {
+                    this.style.backgroundColor = '#FFC1CC';  // やや濃いピンク
+                } else {
+                    this.style.backgroundColor = '#B0E0E6';  // やや濃い水色
+                }
+            });
+
+            info.el.addEventListener('mouseout', function () {
+                if (info.event.extendedProps.status === "done") {
+                    this.style.backgroundColor = '#FFB7C5';  // 元の優しいピンク
+                } else {
+                    this.style.backgroundColor = '#ADD8E6';  // 元の薄い水色
+                }
+            });
         },
         dateClick: function (info) {
             console.log("クリックした日付:", info.dateStr);

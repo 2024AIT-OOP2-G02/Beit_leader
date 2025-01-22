@@ -6,6 +6,7 @@ from routes.user_info import user_bp
 from routes.shop import shop_bp
 from routes.calendar import calendar_bp
 
+
 app = Flask(__name__)
 
 # データベースの初期化
@@ -23,7 +24,9 @@ def home():
     if userCount==0:
         return redirect('/add')
     else:
-        return render_template('index.html')
+        user = User.select()
+        # print(user.name)
+        return render_template('index.html',user=user)
 
 ##↓↓賃金計算↓↓
 @app.route('/wages', methods=['GET'])
@@ -56,12 +59,13 @@ def display_wages():
     expect_earnings = round(calc_average_income(monthly_earnings) / 10000) * 12
     # 見込み稼ぎを計算
     # 計算結果をHTMLテンプレートに渡す
-    return render_template('money.html', wages=wages_dict ,total_income=total_income,formatted_total_income = formatted_total_income,expect_earnings= expect_earnings ,monthly_earnings=monthly_earnings)
+    user = User.select()
+    return render_template('money.html', wages=wages_dict ,total_income=total_income,formatted_total_income = formatted_total_income,expect_earnings= expect_earnings ,monthly_earnings=monthly_earnings,user=user)
 
 # 合計給与の計算・103万グラフの描画
 @app.route('/103_graph', methods=['GET'])
 def display_103_graph():
-    
+    user = User.select()
     shops = Wage.select()
     shifts = Shift.select()
     shops_list = [{
@@ -82,5 +86,4 @@ def display_103_graph():
 
 # メイン関数
 if __name__ == '__main__':
-    app.run(debug=True)
-
+    app.run(debug=True,port=8888)

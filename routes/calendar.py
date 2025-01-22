@@ -1,6 +1,6 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify
-from models import Shift, Wage
+from models import Shift, Wage,User
 from datetime import datetime as dt
 
 # Blueprintの作成
@@ -10,12 +10,13 @@ calendar_bp = Blueprint('calendar', __name__, url_prefix='/calendar')
 def index():
     shops = Wage.select()
     shifts = Shift.select()
+    user = User.select()
     shifts_list = [{
         'start': shift.start_time.strftime('%Y-%m-%d %H:%M:%S'),
         'finish': shift.finish_time.strftime('%Y-%m-%d %H:%M:%S'),
         'title': shift.wage.location
     } for shift in shifts]
-    return render_template('calendar.html', shops=shops, shifts=shifts_list)
+    return render_template('calendar.html', shops=shops, shifts=shifts_list,user=user)
 
 
 @calendar_bp.route('/add', methods=['GET', 'POST'])
@@ -65,6 +66,7 @@ def add():
             return redirect(url_for('calendar.add'))
         
         else:
+            user = User.select()
             shifts = Shift.select()
             wages = Wage.select()
             shifts_list = [{
@@ -73,7 +75,7 @@ def add():
             'finish': shift.finish_time.strftime('%Y-%m-%d %H:%M:%S'),
             'title': shift.wage.location
             } for shift in shifts]
-            return render_template('calendar.html', shops=wages, shifts=shifts_list)
+            return render_template('calendar.html', shops=wages, shifts=shifts_list,user = user)
 
 @calendar_bp.route('/delete/<int:shift_id>', methods=['GET', 'DELETE'])
 def delete_shift(shift_id):
