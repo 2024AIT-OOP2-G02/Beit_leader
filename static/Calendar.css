@@ -1,9 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap");
 
+/* ヘッダーのスタイルを修正 */
 .calendar-header {
     text-align: center;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    /* 追加: 垂直方向の中央揃え */
+    padding: 0 20px;
+    /* 追加: 左右の余白 */
+}
+
+/* リンクを含むdivのスタイル追加 */
+.calendar-header div {
+    display: flex;
+    gap: 20px;
+    /* リンク間の間隔 */
+    align-items: center;
 }
 
 main {
@@ -11,13 +24,19 @@ main {
     height: calc(90vh - 120px);
 }
 
+/* 既存のchange-pageクラスを修正 */
 .change-page {
-    margin-right: 2%;
-    font-size: 25px;
+    display: inline-block;
+    /* 追加 */
+    margin-right: 0;
+    /* 修正: 既存のmargin-rightを削除 */
+    font-size: 20px;
+    /* サイズ調整 */
     transition: 0.5s;
     color: #000000;
-    /* text-decoration: none; */
     font-weight: 900;
+    white-space: nowrap;
+    /* 追加: テキストの折り返しを防ぐ */
 }
 
 .change-page:hover {
