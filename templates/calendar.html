@@ -24,7 +24,7 @@
                     <label for="shift">シフト終了</label>
                     <input type="time" id="shift-out" name="shift_out" required />
                     <label>店舗名：
-                        <select name="location" required>
+                        <select id="shift-shop" name="location" required>
                             {% for shop in shops %}
                             <option value="{{ shop.location }}">{{ shop.location }}</option>
                             {% endfor %}
@@ -43,7 +43,7 @@
                 <!-- サイドバーの内容 -->
             </div>
             <div id="main-contents">
-                <div id="calendar"></div>
+                <div id="calendar" data-shifts='{{ shifts | tojson}}'></div>
             </div>
         </div>
     </div>
