@@ -79,16 +79,11 @@ def add():
 
 @calendar_bp.route('/delete/<int:shift_id>', methods=['GET', 'DELETE'])
 def delete_shift(shift_id):
-    print(f"削除リクエスト received - shift_id: {shift_id}, method: {request.method}")
     try:
         shift = Shift.get_by_id(shift_id)
-        print(f"シフト found: {shift.id}, {shift.start_time}, {shift.finish_time}")
         shift.delete_instance()
-        print("シフト deleted successfully")
         return jsonify({'success': True, 'message': 'シフトを削除しました'})
     except Shift.DoesNotExist:
-        print(f"シフト not found: {shift_id}")
         return jsonify({'success': False, 'message': 'シフトが見つかりませんでした'}), 404
     except Exception as e:
-        print(f"Error deleting shift: {str(e)}")
         return jsonify({'success': False, 'message': str(e)}), 500
