@@ -31,17 +31,15 @@
     </header>
 
     <main id="money-main">
-      <div class="gauge-graph-box">
-        <h2 class="gauge-graph-title">103万の壁</h2>
-        <div class="graph-container">
-          <div
-            id="total_income_graph_container"
-            data-total-income="{{ total_income }}"
-          ></div>
-        </div>
-        <div style="display: flex; justify-content: space-between">
-          <p class="total-wages-text">見込み稼ぎ<span>127</span>万円</p>
-          <p class="total-wages-text">合計収入<span>87</span>万円</p>
+        <div class="gauge-graph-box">
+            <h2 class="gauge-graph-title">103万の壁</h2>
+            <div class="graph-container">
+                <div id="total_income_graph_container" data-total-income="{{ total_income }}"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <p class="total-wages-text">見込み稼ぎ<span>{{expect_earnings}}</span>万円</p>
+                <p class="total-wages-text">合計収入<span>{{formatted_total_income}}</span>万円</p>
+            </div>
         </div>
       </div>
       <div class="wage-box">

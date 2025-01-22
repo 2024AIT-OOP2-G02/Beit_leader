@@ -12,11 +12,9 @@ def index():
     shifts = Shift.select()
     user = User.select()
     shifts_list = [{
-        'id': shift.id,
-        'start_time': shift.start_time.strftime('%Y-%m-%d %H:%M:%S'),
-        'finish_time': shift.finish_time.strftime('%Y-%m-%d %H:%M:%S'),
-        'location': shift.wage.location,
-        'is_holiday': shift.is_holiday
+        'start': shift.start_time.strftime('%Y-%m-%d %H:%M:%S'),
+        'finish': shift.finish_time.strftime('%Y-%m-%d %H:%M:%S'),
+        'title': shift.wage.location
     } for shift in shifts]
     return render_template('calendar.html', shops=shops, shifts=shifts_list,user=user)
 
