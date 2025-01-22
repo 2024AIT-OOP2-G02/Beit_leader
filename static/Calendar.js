@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const upcomingShifts = shifts
             .filter(shift => new Date(shift.start) >= now)
             .sort((a, b) => new Date(a.start) - new Date(b.start))
-            .slice(0, 6); // 最大5件表示
+            .slice(0, 4); // 最大5件表示
 
         upcomingShiftsEl.innerHTML = upcomingShifts.length > 0
             ? upcomingShifts.map(shift => {
