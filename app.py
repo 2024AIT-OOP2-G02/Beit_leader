@@ -1,11 +1,10 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, url_for
 from models import initialize_database, User, Wage, Shift
 from routes.money import calculate_wages, get_monthly_earnings
 from routes.income_analyzer import calc_total_income,calc_average_income
 from routes.user_info import user_bp
 from routes.shop import shop_bp
 from routes.calendar import calendar_bp
-
 
 app = Flask(__name__)
 
@@ -26,7 +25,7 @@ def home():
     else:
         user = User.select()
         # print(user.name)
-        return render_template('index.html',user=user)
+        return redirect(url_for('display_wages'))
 
 ##↓↓賃金計算↓↓
 @app.route('/wages', methods=['GET'])
