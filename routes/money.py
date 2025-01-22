@@ -1,32 +1,8 @@
 from flask import Flask
 
-# ダミーデータ1
-#ユーザー登録から読み取る
-def get_dummy_data():
-    return [
-        {'location': '手打ちうどん恵那', 'weekday_wage': 1000, 'holyday_wage': 1200},
-        {'location': 'ソルジェンテ', 'weekday_wage': 1000, 'holyday_wage': 1200},
-        {'location': 'ご縁どり', 'weekday_wage': 1100, 'holyday_wage': 1300},
-        {'location': 'ラーメンなげやり', 'weekday_wage': 1100, 'holyday_wage': 1300},
-        {'location': 'ラーメン丸和', 'weekday_wage': 900, 'holyday_wage': 1000},
-    ]
-
-#ダミーデータ2
-#カレンダーから受け取る
-def get_dummy_data2():
-    return[ {'location': '手打ちうどん恵那', 'work_time': 5.5, 'is_holyday': False},
-            {'location': 'ソルジェンテ', 'work_time': 4.0, 'is_holyday': True},
-            {'location': 'ご縁どり', 'work_time': 8.0, 'is_holyday': False},
-            {'location': 'ラーメンなげやり', 'work_time': 6.0, 'is_holyday': True},
-            {'location': 'ラーメン丸和', 'work_time': 3.0, 'is_holyday': False,},
-    ]
-
 app = Flask(__name__)
 
 def calculate_wages(shop_data,shifts_data):
-    # data1 = get_dummy_data()
-    # data2 = get_dummy_data2()
-
     # 賃金計算結果を格納する辞書
     wages = {}
 
