@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect
 from models import initialize_database, User, Wage, Shift
 from routes.money import calculate_wages, get_monthly_earnings
-from routes.income_analyzer import calc_total_income
+from routes.income_analyzer import calc_total_income,calc_average_income
 from routes.user_info import user_bp
 from routes.shop import shop_bp
 from routes.calendar import calendar_bp
@@ -49,10 +49,14 @@ def display_wages():
     wages_dict = calculate_wages(shops_list,shifts_list)
     # 合計給与を計算
     total_income = calc_total_income(calculate_wages(shops_list,shifts_list))
+    # 〇〇万の形にフォーマット
+    formatted_total_income = round((total_income / 10000))
     # 月収を計算
     monthly_earnings=get_monthly_earnings(shifts)
+    expect_earnings = round(calc_average_income(monthly_earnings) / 10000) * 12
+    # 見込み稼ぎを計算
     # 計算結果をHTMLテンプレートに渡す
-    return render_template('money.html', wages=wages_dict ,total_income=total_income, monthly_earnings=monthly_earnings)
+    return render_template('money.html', wages=wages_dict ,total_income=total_income,formatted_total_income = formatted_total_income,expect_earnings= expect_earnings ,monthly_earnings=monthly_earnings)
 
 # 合計給与の計算・103万グラフの描画
 @app.route('/103_graph', methods=['GET'])

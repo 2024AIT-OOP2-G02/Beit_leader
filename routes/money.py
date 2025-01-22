@@ -24,8 +24,8 @@ def get_dummy_data2():
 app = Flask(__name__)
 
 def calculate_wages(shop_data,shifts_data):
-    data1 = get_dummy_data()
-    data2 = get_dummy_data2()
+    # data1 = get_dummy_data()
+    # data2 = get_dummy_data2()
 
     # 賃金計算結果を格納する辞書
     wages = {}
@@ -52,7 +52,6 @@ def calculate_wages(shop_data,shifts_data):
             else:
                 wages[location] = total_salary
 
-    # 小数点以下2桁で丸める
     return {location: round(salary) for location, salary in wages.items()}
 
 def get_monthly_earnings(shifts):
