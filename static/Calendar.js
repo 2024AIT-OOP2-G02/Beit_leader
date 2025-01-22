@@ -1,89 +1,109 @@
-// シフトデータをローカルストレージに保存
-function saveShiftToLocalStorage(newEvent) {
-    let shiftArray = JSON.parse(localStorage.getItem("shiftArray")) || [];
-    shiftArray.push(newEvent);
-    localStorage.setItem("shiftArray", JSON.stringify(shiftArray));
-}
+// // シフトデータをローカルストレージに保存
+// function saveShiftToLocalStorage(newEvent) {
+//     let shiftArray = JSON.parse(localStorage.getItem("shiftArray")) || [];
+//     shiftArray.push(newEvent);
+//     localStorage.setItem("shiftArray", JSON.stringify(shiftArray));
+// }
 
-// ローカルストレージからシフトデータを取得
-function getShiftsFromLocalStorage() {
-    return JSON.parse(localStorage.getItem("shiftArray")) || [];
-}
+// // ローカルストレージからシフトデータを取得
+// function getShiftsFromLocalStorage() {
+//     return JSON.parse(localStorage.getItem("shiftArray")) || [];
+// }
 
-// データ保存処理（ボタンクリック時）
-function buttonClick() {
-    const elem_warn_text = document.getElementById("warn-text");
-    const elem_date = document.getElementById("shift-date");
-    const elem_shift_in = document.getElementById("shift-in");
-    const elem_shift_out = document.getElementById("shift-out");
-    const modal = document.getElementById("modal");
-    const date_value = elem_date.value;
-    const shift_in_value = elem_shift_in.value;
-    const shift_out_value = elem_shift_out.value;
+// // データ保存処理（ボタンクリック時）
+// function buttonClick() {
+//     const elem_warn_text = document.getElementById("warn-text");
+//     const elem_date = document.getElementById("shift-date");
+//     const elem_shift_in = document.getElementById("shift-in");
+//     const elem_shift_out = document.getElementById("shift-out");
+//     const elem_shift_shop = document.getElementById("shift-shop");
+//     console.log(elem_shift_shop.value);
+//     const modal = document.getElementById("modal");
+//     const date_value = elem_date.value;
+//     const shift_in_value = elem_shift_in.value;
+//     const shift_out_value = elem_shift_out.value;
 
-    if (!date_value) {
-        console.log("日付を入力");
-        elem_warn_text.style.visibility = "visible";
-        elem_warn_text.innerText = "日付を入力";
-        return;
+//     if (!date_value) {
+//         console.log("日付を入力");
+//         elem_warn_text.style.visibility = "visible";
+//         elem_warn_text.innerText = "日付を入力";
+//         return;
+//     }
+//     if (!shift_in_value) {
+//         console.log("開始時間を入力");
+//         elem_warn_text.style.visibility = "visible";
+//         elem_warn_text.innerText = "開始時間を入力";
+//         return;
+//     }
+//     if (!shift_out_value) {
+//         console.log("終了時間を入力");
+//         elem_warn_text.style.visibility = "visible";
+//         elem_warn_text.innerText = "終了時間を入力";
+//         return;
+//     }
+
+//     elem_warn_text.style.visibility = "hidden";
+//     elem_warn_text.innerText = "";
+
+//     const start = `${date_value}T${shift_in_value}:00`;
+//     const end = `${date_value}T${shift_out_value}:00`;
+
+//     const newEvent = {
+//         title: elem_shift_shop,
+//         start: start,
+//         end: end,
+//         extendedProps: {
+//             status: "pending",
+//         },
+//     };
+
+//     // カレンダーに直接イベントを追加
+//     calendar.addEvent(newEvent);
+
+//     // ローカルストレージにシフト情報を保存
+//     saveShiftToLocalStorage(newEvent);
+
+//     modal.close();
+
+//     console.log("イベントが追加されました:", { start, end });
+//     console.log("現在のshiftArray:", getShiftsFromLocalStorage());
+// }
+
+function getDataFromDB(shifts) {
+    let array = [];
+    for (let i = 0; i < Object.keys(shifts).length; i++) {
+        const elem = shifts[i];
+        array.push({
+            id: elem.id,
+            title: elem.title,
+            start: elem.start,
+            end: elem.finish,
+            extendedProps: {
+                status: "pending",
+            },
+        });
     }
-    if (!shift_in_value) {
-        console.log("開始時間を入力");
-        elem_warn_text.style.visibility = "visible";
-        elem_warn_text.innerText = "開始時間を入力";
-        return;
-    }
-    if (!shift_out_value) {
-        console.log("終了時間を入力");
-        elem_warn_text.style.visibility = "visible";
-        elem_warn_text.innerText = "終了時間を入力";
-        return;
-    }
 
-    elem_warn_text.style.visibility = "hidden";
-    elem_warn_text.innerText = "";
-
-    const start = `${date_value}T${shift_in_value}:00`;
-    const end = `${date_value}T${shift_out_value}:00`;
-
-    const newEvent = {
-        title: "シフト",
-        start: start,
-        end: end,
-        extendedProps: {
-            status: "pending",
-        },
-    };
-
-    // カレンダーに直接イベントを追加
-    calendar.addEvent(newEvent);
-
-    // ローカルストレージにシフト情報を保存
-    saveShiftToLocalStorage(newEvent);
-
-    modal.close();
-
-    console.log("イベントが追加されました:", { start, end });
-    console.log("現在のshiftArray:", getShiftsFromLocalStorage());
+    return array;
 }
 
 // ページ読み込み時にローカルストレージからシフト情報を取得
 document.addEventListener("DOMContentLoaded", function () {
     const calendarEl = document.getElementById("calendar");
+    const shiftData = JSON.parse(calendarEl.dataset.shifts);
     const modal = document.getElementById("modal");
 
-    const shifts = getShiftsFromLocalStorage();
-
+    const shifts = getDataFromDB(shiftData);
+    console.log(shifts);
     // カレンダーの初期化
     calendar = new FullCalendar.Calendar(calendarEl, {
-        timeZone: "Asia/Tokyo",
         initialView: "dayGridMonth",
         headerToolbar: {
             left: "prev,next",
             center: "title",
             right: "dayGridMonth,listMonth",
         },
-        events: shifts, // ローカルストレージから取得したシフト情報を表示
+        events: shifts,
         showNonCurrentDates: false,
         fixedWeekCount: false,
         editable: false,
@@ -111,6 +131,80 @@ document.addEventListener("DOMContentLoaded", function () {
                 dateInput.value = info.dateStr;
             }
         },
+        eventClick: function (info) {
+            console.log('Event Info:', {
+                id: info.event.id,
+                title: info.event.title,
+                start: info.event.startStr,
+                end: info.event.endStr
+            });
+
+            const deleteModal = document.getElementById("delete-modal");
+            const confirmDeleteBtn = document.getElementById("confirm-delete");
+            const cancelDeleteBtn = document.getElementById("cancel-delete");
+
+            if (!info.event.id) {
+                console.error('シフトIDが見つかりません');
+                alert('シフトIDが見つかりません');
+                return;
+            }
+
+            // 削除確認モーダルを表示
+            deleteModal.showModal();
+
+            // キャンセルボタンのイベントリスナー
+            const cancelHandler = () => {
+                deleteModal.close();
+                // イベントリスナーを削除
+                cancelDeleteBtn.removeEventListener('click', cancelHandler);
+                confirmDeleteBtn.removeEventListener('click', confirmHandler);
+            };
+
+            // 削除確認ボタンのイベントリスナー
+            const confirmHandler = () => {
+                const url = `/calendar/delete/${info.event.id}`;
+                console.log('Delete URL:', url);
+
+                fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        console.log('Response status:', response.status);
+                        if (!response.ok) {
+                            return response.json().then(err => {
+                                throw new Error(err.message || `HTTP error! status: ${response.status}`);
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            info.event.remove();
+                            console.log('シフトを削除しました');
+                        } else {
+                            throw new Error(data.message || 'シフトの削除に失敗しました');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('シフトの削除中にエラーが発生しました: ' + error.message);
+                    })
+                    .finally(() => {
+                        deleteModal.close();
+                        // イベントリスナーを削除
+                        cancelDeleteBtn.removeEventListener('click', cancelHandler);
+                        confirmDeleteBtn.removeEventListener('click', confirmHandler);
+                    });
+            };
+
+            // イベントリスナーを追加
+            cancelDeleteBtn.addEventListener('click', cancelHandler);
+            confirmDeleteBtn.addEventListener('click', confirmHandler);
+        }
     });
 
     calendar.render();
@@ -123,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // フォームの送信イベントリスナー
     const form = document.querySelector(".modal-form");
     form.addEventListener("submit", function (event) {
-        event.preventDefault(); // フォームのデフォルト送信を防止
-        buttonClick(); // ボタンクリック処理を実行
+        // event.preventDefault(); // フォームのデフォルト送信を防止
+        modal.close();
     });
 });
