@@ -171,6 +171,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
     calendar.render();
 
+    // 今後の予定を表示する関数
+    function displayUpcomingShifts(shifts) {
+        const upcomingShiftsEl = document.getElementById('upcoming-shifts');
+        const now = new Date();
+
+        // 今日以降のシフトをフィルタリングして日付順にソート
+        const upcomingShifts = shifts
+            .filter(shift => new Date(shift.start) >= now)
+            .sort((a, b) => new Date(a.start) - new Date(b.start))
+            .slice(0, 6); // 最大5件表示
+
+        upcomingShiftsEl.innerHTML = upcomingShifts.length > 0
+            ? upcomingShifts.map(shift => {
+                const startDate = new Date(shift.start);
+                const endDate = new Date(shift.end);
+                const dateStr = startDate.toLocaleDateString('ja-JP', {
+                    month: 'long',
+                    day: 'numeric',
+                    weekday: 'short'
+                });
+                const timeStr = `${startDate.toLocaleTimeString('ja-JP', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })} - ${endDate.toLocaleTimeString('ja-JP', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })}`;
+
+                return `
+                    <div class="shift-item">
+                        <div class="shift-date">${dateStr}</div>
+                        <div class="shift-time">${timeStr}</div>
+                        <div class="shift-location">${shift.title}</div>
+                    </div>
+                `;
+            }).join('')
+            : '<p style="text-align: center; color: rgba(0,0,0,0.5);">予定はありません</p>';
+    }
+
+    // 初期表示
+    displayUpcomingShifts(shifts);
+
+    // カレンダーの予定が変更されたときに更新
+    calendar.on('eventAdd', function () {
+        displayUpcomingShifts(calendar.getEvents());
+    });
+    calendar.on('eventRemove', function () {
+        displayUpcomingShifts(calendar.getEvents());
+    });
+
     // モーダルの閉じるボタンのイベントリスナー
     modal.querySelector("button").addEventListener("click", function () {
         modal.close();
