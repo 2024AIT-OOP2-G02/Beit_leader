@@ -6,13 +6,17 @@
         <title>給料計算結果</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}" />
         <link rel="stylesheet" href="{{ url_for('static', filename='money.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='calendar.css') }}">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
 
     <body>
-        <header class="wage-header">
+        <header class="calendar-header">
             <h1>バイトリーダー</h1>
-            <a href="{{ url_for('calendar.index') }}" class="change-page">カレンダー</a>
+            <div>
+                <a href="{{ url_for('shop.add') }}" class="change-page">バイト先追加</a>
+                <a href="{{ url_for('calendar.index') }}" class="change-page">カレンダー</a>
+            </div>
         </header>
 
         <main id="money-main">

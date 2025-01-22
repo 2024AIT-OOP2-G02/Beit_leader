@@ -6,11 +6,17 @@
         <title>シフト管理アプリ</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}" />
         <link rel="stylesheet" href="{{ url_for('static', filename='shop_add.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='calendar.css') }}">
     </head>
 
     <body>
-        <header>
+        <header class="calendar-header">
             <h1>バイトリーダー</h1>
+          <div>
+            <a href="{{ url_for('calendar.index') }}" class="change-page">カレンダー</a>
+            <a href="{{ url_for('display_wages') }}" class="change-page">給与参照</a>
+          </div>
+        
         </header>
         <main class="shop-add-main">
             <form action="{{ url_for('shop.add')}}" method="post" class="shop-add-form">
