@@ -22,9 +22,9 @@ def index():
 
 @calendar_bp.route('/add', methods=['GET', 'POST'])
 def add():
-        
+        # print(request.method)
         if request.method == 'POST':
-            print("入力した値",request.form)
+            # print("入力した値",request.form)
             try:
                 shift_date = request.form['shift_date']
                 shift_in = request.form['shift_in']
@@ -48,19 +48,18 @@ def add():
             if start_time > finish_time:
                 return redirect(url_for('calendar.add'))
             
-            work_time = (finish_time - start_time).total_seconds() / 3600
-            round(work_time,2)
-            
             # 休日かどうかを判定
             if(start_time.strftime('%a') == 'Sat' or start_time.strftime('%a') == 'Sun'):
                 is_holiday = True
             else:
                 is_holiday = False
             
+            work_time = (finish_time - start_time).total_seconds() / 3600
+            
             # Shiftテーブルに新しいシフトを追加
             Shift.create(
                 wage=wage,
-                work_time=work_time,  # 勤務時間を計算
+                work_time=round(work_time,2),  # 勤務時間を計算
                 start_time=start_time,
                 finish_time=finish_time,
                 is_holiday=is_holiday
@@ -75,5 +74,4 @@ def add():
             'finish': shift.finish_time.strftime('%Y-%m-%d %H:%M:%S'),
             'title': shift.wage.location
             } for shift in shifts]
-            print(shifts_list)
             return render_template('calendar.html', shops=wages, shifts=shifts_list)
