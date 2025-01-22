@@ -12,26 +12,42 @@ document.addEventListener("DOMContentLoaded", () => {
     const maxAmount = 1030000;
     const warningThreshold = 1000000;
 
-    // Chart.jsでグラフを描画
-    const ctx = canvas.getContext("2d");
+    // 虹色の色リスト
+    const rainbowColors = ["#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3"];
+    let colorIndex = 0;
 
+    // 棒グラフの色を動的に設定
+    const getBarColor = () => {
+        if (totalIncome > maxAmount) {
+            // 103万円以上: 虹色（点滅）
+            return rainbowColors[colorIndex % rainbowColors.length];
+        } else if (totalIncome > warningThreshold) {
+            // 100万円以上: 赤色
+            return "#FF0000";
+        }
+        // デフォルト（青色）
+        return "#2196F3";
+    };
+
+    // チャートの設定
+    const ctx = canvas.getContext("2d");
     const incomeChart = new Chart(ctx, {
         type: "bar",
         data: {
             labels: ["給与比較"], // ラベルを一つにして、全て同じ位置で描画
             datasets: [
                 {
+                    label: "現在の給与",
+                    data: [totalIncome], // 現在の給与データ
+                    backgroundColor: getBarColor(), // 棒グラフの色
+                    borderColor: "#1976D2",
+                    borderWidth: 1,
+                },
+                {
                     label: "103万円",
                     data: [maxAmount], // 103万円データ
                     backgroundColor: "rgba(192, 192, 192, 0.5)", // 半透明な灰色
                     borderColor: "rgba(192, 192, 192, 1)",
-                    borderWidth: 1,
-                },
-                {
-                    label: "現在の給与",
-                    data: [totalIncome], // 現在の給与データ
-                    backgroundColor: "#2196F3", // 現在の給与バーの色
-                    borderColor: "#1976D2",
                     borderWidth: 1,
                 },
             ],
@@ -52,33 +68,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 legend: {
                     display: true, // 凡例を表示
                     position: "top", // 凡例の位置を上に設定
-                    labels: {
-                        color: totalIncome > warningThreshold ? "#FF0000" : "#000000", // 100万円を超えたらラベルを赤色に
-                    },
                 },
             },
         },
         plugins: [
             {
-                id: "pachinkoBlinkEffect",
-                beforeDatasetsDraw(chart) {
-                    // 103万円を超えた場合にパチンコのような点滅を実現
-                    if (totalIncome > maxAmount) {
-                        const dataset = chart.data.datasets[1]; // 現在の給与データセット
-                        const colors = ["#FF0000", "#FFFF00", "#00FF00", "#0000FF"]; // 点滅に使う色
-                        let colorIndex = 0;
-
-                        if (!chart.isBlinking) {
-                            chart.isBlinking = true;
-                            setInterval(() => {
-                                dataset.backgroundColor = colors[colorIndex]; // 色を順番に切り替え
-                                colorIndex = (colorIndex + 1) % colors.length; // 色インデックスを循環させる
-                                chart.update();
-                            }, 200); // 点滅速度（ミリ秒）
-                        }
-                    }
+                id: "barColorEffect",
+                beforeUpdate(chart) {
+                    // 現在の給与データの背景色を更新
+                    chart.data.datasets[0].backgroundColor = getBarColor();
                 },
             },
         ],
     });
+
+    // 虹色の点滅を開始（103万円以上のとき）
+    if (totalIncome > maxAmount) {
+        setInterval(() => {
+            colorIndex += 1; // 次の色に進む
+            incomeChart.update(); // チャートを更新
+        }, 150); // 150msごとに更新
+    }
 });
