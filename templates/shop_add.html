@@ -5,41 +5,38 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>シフト管理アプリ</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='user_add.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='shop_add.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='calendar.css') }}">
     </head>
 
     <body>
-        <header>
+        <header class="calendar-header">
             <h1>バイトリーダー</h1>
+          <div>
+            <a href="{{ url_for('calendar.index') }}" class="change-page">カレンダー</a>
+            <a href="{{ url_for('display_wages') }}" class="change-page">給与参照</a>
+          </div>
+        
         </header>
-        <main class="user-add-main">
-            <form action="/add" method="post" class="user-add-form">
-                <h2>ユーザ登録</h2>
-                <label>
-                    名前
-                    <input type="text" name="user_id" value="{{ user_id }}" required />
-                </label>
-                <br />
-
+        <main class="shop-add-main">
+            <form action="{{ url_for('shop.add')}}" method="post" class="shop-add-form">
+                <h2>バイト先追加登録</h2>
                 <label>
                     バイト先
                     <input type="text" name="company_id" value="{{ company_id }}" required />
                 </label>
                 <br />
-
                 <label>
                     平日時給
                     <input type="number" name="weekday_wage" value="{{ weekday_wage }}" required />
                 </label>
                 <br />
-
                 <label>
                     休日時給
                     <input type="number" name="holiday_wage" value="{{ holyday_wage }}" required />
                 </label>
                 <br />
-
-                <input type="submit" value="次へ" class="button" />
+                <input type="submit" value="追加" class="button" />
             </form>
         </main>
     </body>

@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>給料計算結果</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='money.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='calendar.css') }}">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>給料計算結果</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
+    <body>
+        <header class="calendar-header">
+            <h1>バイトリーダー</h1>
+            <div>
+                <a href="{{ url_for('shop.add') }}" class="change-page">バイト先追加</a>
+                <a href="{{ url_for('calendar.index') }}" class="change-page">カレンダー</a>
+            </div>
+        </header>
 
-<body>
-    <header class="wage-header">
-        <h1>Beit leader</h1>
-        <a href="{{ url_for('display_calendar') }}" class="change-page">カレンダーへ</a>
-    </header>
-
-    <main id="money-main">
-
-        <div>
+        <main id="money-main">
             <div class="gauge-graph-box">
-                <p class="gauge-graph-title">103万の壁</p>
+                <h2 class="gauge-graph-title">103万の壁</h2>
                 <div class="graph-container">
                     <div id="total_income_graph_container" data-total-income="{{ total_income }}"></div>
                 </div>
                 <div style="display: flex; justify-content: space-between;">
-                    <p class="total-wages-text">見込み稼ぎ<span>127</span>万円</p>
-                    <p class="total-wages-text">合計収入<span>87</span>万円</p>
+                    <p class="total-wages-text">見込み稼ぎ<span>{{expect_earnings}}</span>万円</p>
+                    <p class="total-wages-text">合計収入<span>{{formatted_total_income}}</span>万円</p>
                 </div>
             </div>
             <div class="wage-box">
@@ -33,49 +35,29 @@
                     <h2>店舗別給与</h2>
                     <p id="total-wages"></p>
                     <canvas id="salary-graph"></canvas>
-                    <!-- <table class="money-table">
-                        <thead>
-                            <tr>
-                                <th>バイト先</th>
-                                <th>合計給与</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for location, salary in wages.items() %}
-                            <tr>
-                                <td>{{ location }}</td>
-                                <td>{{ salary }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table> -->
                 </div>
                 <div class="wages-box-graph">
                     <h2>月別給与</h2>
                     <p id="wages-by-month"></p>
                     <div class="graph-container">
-                        <div id="monthly_earnings_graph_container"
-                            data-monthly-earnings='{{ monthly_earnings | tojson }}'></div>
+                        <div id="monthly_earnings_graph_container" data-monthly-earnings='{{ monthly_earnings | tojson }}''></div>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
 
-    </main>
+        <footer>
+            <p>2024 シフト管理アプリ</p>
+        </footer>
 
-    <footer>
-        <p>&copy; 2024 シフト管理アプリ</p>
-    </footer>
-</body>
+        <!-- Pythonで渡されたデータをJavaScript変数として定義 -->
+        <script>
+            const wagesData = {{ wages| tojson | safe }};
+        </script>
 
-<!-- Pythonで渡されたデータをJavaScript変数として定義 -->
-<script>
-    const wagesData = {{ wages| tojson | safe }};
-</script>
-
-<!-- 外部JavaScriptファイルを読み込む -->
-<script src="{{ url_for('static', filename='money.js') }}"></script>
-<script src="{{ url_for('static', filename='total_income_graph.js') }}" defer></script>
-<script src="{{ url_for('static', filename='monthly_earnings_graph.js') }}" defer></script>
-
+        <!-- 外部JavaScriptファイルを読み込む -->
+        <script src="{{ url_for('static', filename='money.js') }}"></script>
+        <script src="{{ url_for('static', filename='total_income_graph.js') }}" defer></script>
+        <script src="{{ url_for('static', filename='monthly_earnings_graph.js') }}" defer></script>
+    </body>
 </html>

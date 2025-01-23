@@ -2,54 +2,78 @@
 <html lang="ja">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-	<link rel="stylesheet" href="{{ url_for('static', filename='calendar.css') }}">
-	<script src="{{ url_for('static', filename='calendar.js') }}" defer></script>
-	<title>Beit-Leader-test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='calendar.css') }}">
+    <script src="{{ url_for('static', filename='calendar.js') }}" defer></script>
+    <title>シフト登録</title>
 </head>
 
-
 <body>
-	<dialog id="modal">
-		<button autofocus>閉じる</button>
-		<div id="modal-text">
-			<p>シフトの日時を入力</p>
-			<div id="modal-box">
-				<form class="modal-form">
-					<label for="shift">日付</label>
-					<input type="date" id="shift-date" name="shift-date">
-					<label for="shift">シフト開始</label>
-					<input type="time" id="shift-in" name="shift-in">
-					<label for="shift">シフト終了</label>
-					<input type="time" id="shift-out" name="shift-out">
-					<input type="button" value="登録" id="shift-button" onclick="buttonClick()">
-				</form>
-				<p id="warn-text">日付を入力してね</p>
-			</div>
-		</div>
-	</dialog>
-	<div id="contents">
-		<h1 id="header">シフト登録</h1>
-		<div id="main">
-			<div id="side">
-				<!-- <form class="shift-form">
-					<label for="shift">日付</label>
-					<input type="date" id="shift-date" name="shift-date">
-					<label for="shift">シフト開始</label>
-					<input type="time" id="shift-in" name="shift-in">
-					<label for="shift">シフト終了</label>
-					<input type="time" id="shift-out" name="shift-out">
-					<input type="button" value="登録" id="shift-button" onclick="buttonClick()">
-				</form>
-				<p id="warn-text">日付を入力してね</p> -->
-			</div>
-			<div id="main-contents">
-				<div id="calendar"></div>
-			</div>
-		</div>
-	</div>
+    <header class="calendar-header">
+        <h1>バイトリーダー</h1>
+        <div>
+        <a href="{{ url_for('shop.add') }}" class="change-page">バイト先追加</a>
+        <a href="{{ url_for('display_wages') }}" class="change-page">給与参照</a>
+      </div>    
+    </header>
+
+    <main>
+        <dialog id="modal">
+            <button autofocus>X</button>
+            <div id="modal-text">
+                <p>シフトの日時を入力</p>
+                <div id="modal-box">
+                    <form action="{{ url_for('calendar.add')}}" method="post" class="modal-form">
+                        <label for="shift-date">日付</label>
+                        <input type="date" id="shift-date" name="shift_date" required />
+                        <label for="shift-in">シフト開始</label>
+                        <input type="time" id="shift-in" name="shift_in" required />
+                        <label for="shift-out">シフト終了</label>
+                        <input type="time" id="shift-out" name="shift_out" required />
+                        <label for="shift-shop">店舗名：</label>
+                        <select id="shift-shop" name="location" required>
+                            {% for shop in shops %}
+                            <option value="{{ shop.location }}">{{ shop.location }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="追加" class="button" />
+                    </form>
+                    <p id="warn-text">日付を入力してね</p>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog id="delete-modal">
+            <div class="delete-modal-content">
+                <h3>シフトを削除</h3>
+                <p>このシフトを削除してもよろしいですか？</p>
+                <div class="delete-modal-buttons">
+                    <button id="cancel-delete">キャンセル</button>
+                    <button id="confirm-delete">削除</button>
+                </div>
+            </div>
+        </dialog>
+
+        <div id="contents">
+            <div id="main">
+                <div id="side">
+                    <h2>今後の予定</h2>
+                    <div id="upcoming-shifts">
+                        <!-- JavaScriptで予定が動的に挿入されます -->
+                    </div>
+                </div>
+                <div id="main-contents">
+                    <div id="calendar" data-shifts='{{ shifts | tojson}}'></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>2024 シフト管理アプリ</p>
+    </footer>
 </body>
 
 </html>

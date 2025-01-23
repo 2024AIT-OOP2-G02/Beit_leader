@@ -1,8 +1,10 @@
-from flask import Flask, render_template, redirect
-from models import initialize_database, User
+from flask import Flask, render_template, redirect, url_for
+from models import initialize_database, User, Wage, Shift
 from routes.money import calculate_wages, get_monthly_earnings
-from routes.income_analyzer import calc_total_income
+from routes.income_analyzer import calc_total_income,calc_average_income
 from routes.user_info import user_bp
+from routes.shop import shop_bp
+from routes.calendar import calendar_bp
 
 app = Flask(__name__)
 
@@ -11,6 +13,9 @@ initialize_database()
 
 # add用
 app.register_blueprint(user_bp)
+app.register_blueprint(shop_bp)
+app.register_blueprint(calendar_bp)
+
 #デフォルトページ（index.html）を表示
 @app.route('/', methods=['GET'])
 def home():
@@ -18,32 +23,66 @@ def home():
     if userCount==0:
         return redirect('/add')
     else:
-        return render_template('index.html')
+        user = User.select()
+        # print(user.name)
+        return redirect(url_for('display_wages'))
 
 ##↓↓賃金計算↓↓
 @app.route('/wages', methods=['GET'])
 def display_wages():
-    # バイト先ごとの給与を計算
-    wages_dict = calculate_wages()
-    # 合計給与を計算
-    total_income = calc_total_income(calculate_wages())
-    # 月収を計算
-    monthly_earnings=get_monthly_earnings()
     
+    shops = Wage.select()
+    shifts = Shift.select()
+    
+    shops_list = [{
+        'location': shop.location,
+        'weekday_wage': shop.weekday_wage,
+        'holiday_wage': shop.holiday_wage
+    } for shop in shops]
+
+    shifts_list = [{
+        'id': shift.id,
+        'work_time': shift.work_time,
+        'location': shift.wage.location,
+        'is_holiday': shift.is_holiday
+    } for shift in shifts]
+    
+    # バイト先ごとの給与を計算
+    wages_dict = calculate_wages(shops_list,shifts_list)
+    # 合計給与を計算
+    total_income = calc_total_income(calculate_wages(shops_list,shifts_list))
+    # 〇〇万の形にフォーマット
+    formatted_total_income = round((total_income / 10000))
+    # 月収を計算
+    monthly_earnings=get_monthly_earnings(shifts)
+    expect_earnings = round(calc_average_income(monthly_earnings) / 10000) * 12
+    # 見込み稼ぎを計算
     # 計算結果をHTMLテンプレートに渡す
-    return render_template('money.html', wages=wages_dict ,total_income=total_income, monthly_earnings=monthly_earnings)
+    user = User.select()
+    return render_template('money.html', wages=wages_dict ,total_income=total_income,formatted_total_income = formatted_total_income,expect_earnings= expect_earnings ,monthly_earnings=monthly_earnings,user=user)
 
 # 合計給与の計算・103万グラフの描画
 @app.route('/103_graph', methods=['GET'])
 def display_103_graph():
-    total_income = calc_total_income(calculate_wages())
-    return render_template('total_income.html', total_income=total_income)
+    user = User.select()
+    shops = Wage.select()
+    shifts = Shift.select()
+    shops_list = [{
+        'location': shop.location,
+        'weekday_wage': shop.weekday_wage,
+        'holiday_wage': shop.holiday_wage
+    } for shop in shops]
 
-# カレンダーの表示
-@app.route('/calendar', methods=['GET'])
-def display_calendar():
-    return render_template('calendar.html')
+    shifts_list = [{
+        'id': shift.id,
+        'work_time': shift.work_time,
+        'location': shift.wage.location,
+        'is_holiday': shift.is_holiday
+    } for shift in shifts]
+
+    total_income = calc_total_income(calculate_wages(shops_list,shifts_list))
+    return render_template('total_income.html', total_income=total_income)
 
 # メイン関数
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,port=8888)
